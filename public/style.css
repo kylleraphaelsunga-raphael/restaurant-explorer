@@ -1,0 +1,363 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #ffffff;
+    color: #333333;
+    line-height: 1.5;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.logo {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #111827;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #4b5563;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #111827;
+}
+
+.btn-admin {
+    text-decoration: none;
+    border: 1px solid #d1d5db;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    color: #374151;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Utility / Visibility */
+.hidden {
+    display: none !important;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    background-color: #111827;
+    background-image: linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.85)), url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80');
+    background-size: cover;
+    background-position: center;
+    color: #ffffff;
+    text-align: center;
+    padding: 6rem 1rem;
+}
+
+.hero-sub {
+    color: #f97316;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.hero-section h1 {
+    font-size: 2.75rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.hero-section p {
+    color: #d1d5db;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+    font-size: 0.95rem;
+}
+
+.btn-orange {
+    background-color: #f97316;
+    color: #ffffff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-orange:hover {
+    background-color: #ea580c;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid #d1d5db;
+    color: #374151;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* Featured Section */
+.featured-section {
+    padding: 4rem 5%;
+    background-color: #fcfcfc;
+    text-align: center;
+}
+
+.section-tag {
+    color: #f97316;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.featured-section h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.5rem;
+}
+
+.section-sub {
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin-bottom: 2.5rem;
+}
+
+.featured-count {
+    margin-top: 2rem;
+    color: #6b7280;
+    font-size: 0.85rem;
+}
+
+/* Cards Grid */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.restaurant-card {
+    background: #ffffff;
+    border: 1px solid #f3f4f6;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.card-img-placeholder {
+    background-color: #f3f0e9;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a39e93;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Card Image Container (Aspect Ratio & Alignment Fix) */
+.card-image-container,
+.restaurant-card-image {
+    width: 100%;
+    height: 180px;              /* Forces a consistent landscape height */
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;   /* Centers image horizontally */
+    align-items: center;       /* Centers image vertically */
+    background-color: #f1f5f9;
+}
+
+/* Landscape Image Cropping & Positioning */
+.restaurant-card img,
+.card-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;          /* Maintains landscape aspect ratio without stretching */
+    object-position: center;     /* Focuses and centers the middle of the image */
+    display: block;
+    border-radius: 8px;
+}
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-body h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.25rem;
+}
+
+.card-cuisine {
+    color: #f97316;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.card-borough {
+    color: #6b7280;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+}
+
+.card-grade {
+    color: #6b7280;
+    font-size: 0.8rem;
+}
+
+/* CTA Section */
+.cta-section {
+    background-color: #1f2937;
+    color: #ffffff;
+    text-align: center;
+    padding: 4rem 1rem;
+}
+
+.cta-section h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.cta-section p {
+    color: #9ca3af;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+/* Filter Card */
+.filter-card {
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.filter-card h2 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.filter-group label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+select, input {
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.badge-count {
+    background: #e5e7eb;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
+
+/* Simple Views */
+.simple-page {
+    max-width: 700px;
+    min-height: 50vh;
+}
+
+.admin-box {
+    max-width: 400px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 3rem auto;
+}
+
+.margin-top { margin-top: 1rem; }
+.margin-top-lg { margin-top: 1.5rem; width: 100%; }
+
+/* Footer */
+footer {
+    background-color: #111827;
+    color: #9ca3af;
+    padding: 2.5rem 5%;
+    font-size: 0.85rem;
+}
+
+.footer-container h4 {
+    color: #ffffff;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.copyright {
+    display: block;
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    color: #6b7280;
+}

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dine & Seek</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+</head>
+
+<body>
+
+    <!-- =========================
+         TOP NAVIGATION
+    ========================== -->
+    <header class="navbar">
+
+        <div class="logo">
+            Dine & Seek
+        </div>
+
+        <nav>
+
+            <a
+                href="#"
+                class="nav-link active"
+                onclick="showView('home'); return false;"
+            >
+                Home
+            </a>
+
+            <a
+                href="#"
+                class="nav-link"
+                onclick="showView('about'); return false;"
+            >
+                About
+            </a>
+
+            <a
+                href="#"
+                class="nav-link"
+                onclick="showView('restaurants'); return false;"
+            >
+                Restaurants
+            </a>
+
+            <a
+                href="#"
+                class="nav-link"
+                onclick="showView('best-quality'); return false;"
+            >
+                Best Quality
+            </a>
+
+            <a
+                href="#"
+                class="btn-admin"
+                onclick="showView('admin'); return false;"
+            >
+                Admin Login
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================
+         1. HOME VIEW
+    ========================== -->
+    <div id="home-view" class="page-view">
+
+        <section class="hero-section">
+
+            <div class="hero-content">
+
+                <span class="hero-sub">
+                    RESTAURANT FINDER
+                </span>
+
+                <h1>
+                    Discover Your Next<br>
+                    Favorite Restaurant
+                </h1>
+
+                <p>
+                    Explore restaurants, discover different cuisines,
+                    and find places that might become your next favorite.
+                </p>
+
+                <button
+                    class="btn-orange"
+                    onclick="showView('restaurants')"
+                >
+                    Explore Restaurants
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- FEATURED RESTAURANTS -->
+        <section class="featured-section">
+
+            <span class="section-tag">
+                EXPLORE
+            </span>
+
+            <h2>
+                Featured Restaurants
+            </h2>
+
+            <p class="section-sub">
+                Take a look at some of the restaurants available
+                in our collection.
+            </p>
+
+            <!--
+                Restaurants from MongoDB will be displayed here
+                by script.js
+            -->
+            <div
+                id="featured-grid"
+                class="cards-grid"
+            ></div>
+
+            <p
+                class="featured-count"
+                id="featured-count-text"
+            >
+                Loading restaurants...
+            </p>
+
+        </section>
+
+
+        <!-- CALL TO ACTION -->
+        <section class="cta-section">
+
+            <h2>
+                Ready to Discover?
+            </h2>
+
+            <p>
+                Explore our restaurant collection and find your
+                next dining destination.
+            </p>
+
+            <button
+                class="btn-orange"
+                onclick="showView('restaurants')"
+            >
+                View Restaurants
+            </button>
+
+        </section>
+
+    </div>
+
+
+    <!-- =========================
+         2. RESTAURANTS VIEW
+    ========================== -->
+    <div
+        id="restaurants-view"
+        class="page-view hidden"
+    >
+
+        <div class="container main-content">
+
+
+            <!-- FILTER CARD -->
+            <div class="filter-card">
+
+                <h2>
+                    Filter Restaurants
+                </h2>
+
+
+                <div class="filter-grid">
+
+
+                    <!-- RESTAURANT NAME -->
+                    <div class="filter-group">
+
+                        <label for="restaurantName">
+                            Restaurant Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="restaurantName"
+                            placeholder="Search restaurant name"
+                        >
+
+                    </div>
+
+
+                    <!-- BOROUGH -->
+                    <div class="filter-group">
+
+                        <label for="borough">
+                            Borough
+                        </label>
+
+                        <select id="borough">
+
+                            <option value="">
+                                All Boroughs
+                            </option>
+
+                            <option value="Bronx">
+                                Bronx
+                            </option>
+
+                            <option value="Brooklyn">
+                                Brooklyn
+                            </option>
+
+                            <option value="Manhattan">
+                                Manhattan
+                            </option>
+
+                            <option value="Queens">
+                                Queens
+                            </option>
+
+                            <option value="Staten Island">
+                                Staten Island
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- CUISINE -->
+                    <div class="filter-group">
+
+                        <label for="cuisine">
+                            Cuisine
+                        </label>
+
+                        <select id="cuisine">
+
+                            <option value="">
+                                All Cuisines
+                            </option>
+
+                            <option value="American ">
+                                American
+                            </option>
+
+                            <option value="Chinese">
+                                Chinese
+                            </option>
+
+                            <option value="Bakery">
+                                Bakery
+                            </option>
+
+                            <option value="Pizza">
+                                Pizza
+                            </option>
+
+                            <option value="Hamburgers">
+                                Hamburgers
+                            </option>
+
+                            <option value="Italian">
+                                Italian
+                            </option>
+
+                            <option value="Delicatessen">
+                                Delicatessen
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- GRADE -->
+                    <div class="filter-group">
+
+                        <label for="grade">
+                            Grade
+                        </label>
+
+                        <select id="grade">
+
+                            <option value="">
+                                All Grades
+                            </option>
+
+                            <option value="A">
+                                Grade A
+                            </option>
+
+                            <option value="B">
+                                Grade B
+                            </option>
+
+                            <option value="C">
+                                Grade C
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- MAXIMUM SCORE -->
+                    <div class="filter-group">
+
+                        <label for="maxScore">
+                            Maximum Score
+                        </label>
+
+                        <input
+                            type="number"
+                            id="maxScore"
+                            min="0"
+                            placeholder="Example: 10"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- FILTER BUTTONS -->
+                <div class="filter-actions">
+
+                    <button
+                        class="btn-orange"
+                        onclick="loadRestaurants()"
+                    >
+                        Apply Filter
+                    </button>
+
+                    <button
+                        class="btn-outline"
+                        onclick="resetFilters()"
+                    >
+                        Reset
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESULTS HEADER -->
+            <div class="results-header">
+
+                <h3>
+                    All Matching Restaurants
+                </h3>
+
+                <span
+                    id="results-count"
+                    class="badge-count"
+                >
+                    0 found
+                </span>
+
+            </div>
+
+
+            <!--
+                Real MongoDB restaurant results
+                will be inserted here by script.js
+            -->
+            <div
+                id="results"
+                class="cards-grid"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         3. ABOUT VIEW
+    ========================== -->
+    <div
+        id="about-view"
+        class="page-view hidden"
+    >
+
+        <div class="container simple-page">
+
+            <h2>
+                About Dine & Seek
+            </h2>
+
+            <p>
+                Dine & Seek is a restaurant discovery platform
+                that helps users explore restaurants across
+                different NYC boroughs and cuisines. Users can
+                search and filter restaurants based on location,
+                cuisine, sanitation grade, and inspection score.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         4. BEST QUALITY VIEW
+    ========================== -->
+    <div
+        id="best-quality-view"
+        class="page-view hidden"
+    >
+
+        <div class="container simple-page">
+
+            <h2>
+                Best Quality Restaurants
+            </h2>
+
+            <p>
+                Featuring restaurants with Grade A sanitation
+                records and low inspection scores.
+            </p>
+
+            <div
+                id="quality-results"
+                class="cards-grid margin-top"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         5. ADMIN LOGIN VIEW
+    ========================== -->
+    <div
+        id="admin-view"
+        class="page-view hidden"
+    >
+
+        <div class="container admin-box">
+
+            <h2>
+                Admin Login
+            </h2>
+
+
+            <div class="filter-group">
+
+                <label for="adminUsername">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="adminUsername"
+                    placeholder="Enter username"
+                >
+
+            </div>
+
+
+            <div class="filter-group margin-top">
+
+                <label for="adminPassword">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="adminPassword"
+                    placeholder="Enter password"
+                >
+
+            </div>
+
+
+            <button
+                class="btn-orange margin-top-lg"
+                type="button"
+            >
+                Sign In
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+    <footer>
+
+        <div class="footer-container">
+
+            <h4>
+                Dine & Seek
+            </h4>
+
+            <p>
+                Discover restaurants. Explore your options.
+            </p>
+
+            <span class="copyright">
+                © 2026 Dine & Seek
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
+
+</body>
+</html>
