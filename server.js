@@ -34,85 +34,120 @@ async function connectDB() {
     }
 }
 
+// Makes user text safe to use inside a regex
+function escapeRegex(text) {
+    return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 // Get restaurants
 app.get("/api/restaurants", async (req, res) => {
     try {
         const {
+            name,
             borough,
             cuisine,
             grade,
-            maxScore
+            maxScore,
+            unique,
+            sort,
+            limit
         } = req.query;
 
         const pipeline = [];
         const matchStage = {};
 
-        // Filter by borough
+        // Filters on the restaurant itself
+        if (name) {
+            matchStage.name = {
+                $regex: escapeRegex(name.trim()),
+                $options: "i"
+            };
+        }
+
         if (borough) {
             matchStage.borough = borough;
         }
 
-        // Filter by cuisine
         if (cuisine) {
             matchStage.cuisine = cuisine;
         }
 
-        // Apply borough and cuisine filters
-        if (borough || cuisine) {
-            pipeline.push({
-                $match: matchStage
-            });
+        if (Object.keys(matchStage).length > 0) {
+            pipeline.push({ $match: matchStage });
         }
 
-        // Access individual grade records
+        // One row per inspection, newest first
+        pipeline.push({ $unwind: "$grades" });
+        pipeline.push({ $sort: { "grades.date": -1 } });
+
+        // Keep only the latest inspection of each restaurant
         pipeline.push({
-            $unwind: "$grades"
+            $group: {
+                _id: "$_id",
+                restaurant_id: { $first: "$restaurant_id" },
+                name: { $first: "$name" },
+                borough: { $first: "$borough" },
+                cuisine: { $first: "$cuisine" },
+                address: { $first: "$address" },
+                grade: { $first: "$grades.grade" },
+                score: { $first: "$grades.score" }
+            }
         });
 
-        // Grade and score filters
-        if (grade || maxScore) {
-            const gradeMatch = {};
+        // Grade and score filters now use the latest inspection only
+        const latestMatch = {};
+        const scoreRule = {};
 
-            if (grade) {
-                gradeMatch["grades.grade"] = grade;
-            }
-
-            if (maxScore) {
-                gradeMatch["grades.score"] = {
-                    $lte: Number(maxScore)
-                };
-            }
-
-            pipeline.push({
-                $match: gradeMatch
-            });
+        if (grade) {
+            latestMatch.grade = grade;
         }
 
-        // Select only the fields needed by the frontend
-        pipeline.push({
-            $project: {
-                _id: 0,
-                restaurant_id: 1,
-                name: 1,
-                borough: 1,
-                cuisine: 1,
-                address: 1,
-                grade: "$grades.grade",
-                score: "$grades.score"
-            }
-        });
+        if (maxScore) {
+            scoreRule.$lte = Number(maxScore);
+        }
 
-        // Sort alphabetically
-        pipeline.push({
-            $sort: {
-                name: 1
-            }
-        });
+        if (sort === "score") {
+            scoreRule.$type = "number";
+        }
 
-        // Get restaurant data from MongoDB
+        if (Object.keys(scoreRule).length > 0) {
+            latestMatch.score = scoreRule;
+        }
+
+        if (Object.keys(latestMatch).length > 0) {
+            pipeline.push({ $match: latestMatch });
+        }
+
+        // Sorting
+        const sortStage =
+            sort === "score"
+                ? { score: 1, name: 1 }
+                : { name: 1 };
+
+        pipeline.push({ $sort: sortStage });
+
+        // Optional: one result per restaurant name
+        if (unique === "true") {
+            pipeline.push({
+                $group: {
+                    _id: "$name",
+                    doc: { $first: "$$ROOT" }
+                }
+            });
+            pipeline.push({ $replaceRoot: { newRoot: "$doc" } });
+            pipeline.push({ $sort: sortStage });
+        }
+
+        // Optional: limit the number of results
+        if (Number(limit) > 0) {
+            pipeline.push({ $limit: Number(limit) });
+        }
+
+        pipeline.push({ $project: { _id: 0 } });
+
         const restaurants = await db
             .collection("restaurants")
-            .aggregate(pipeline)
+            .aggregate(pipeline, { allowDiskUse: true })
             .toArray();
 
         res.json(restaurants);

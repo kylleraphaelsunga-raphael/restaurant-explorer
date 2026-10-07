@@ -114,28 +114,16 @@ async function loadFeaturedRestaurants() {
     const countText = document.getElementById("featured-count-text");
 
     try {
-        const response = await fetch("/api/restaurants");
+        // The server removes duplicates and returns only 6
+        const response = await fetch(
+            "/api/restaurants?unique=true&limit=6"
+        );
 
         if (!response.ok) {
             throw new Error("Failed to load restaurants.");
         }
 
-        const restaurants = await response.json();
-
-        // Only remove duplicates for the Featured Restaurants section
-        const featured = [];
-        const seenNames = new Set();
-
-        for (const restaurant of restaurants) {
-            if (!seenNames.has(restaurant.name)) {
-                seenNames.add(restaurant.name);
-                featured.push(restaurant);
-            }
-
-            if (featured.length === 6) {
-                break;
-            }
-        }
+        const featured = await response.json();
 
         featuredGrid.innerHTML = "";
 
@@ -156,6 +144,10 @@ async function loadFeaturedRestaurants() {
 // ===============================
 
 async function loadRestaurants() {
+
+    const name =
+        document.getElementById("restaurantName").value.trim();
+
 
     const borough =
         document.getElementById("borough").value;
@@ -185,6 +177,17 @@ async function loadRestaurants() {
     // Create URL parameters
     const params =
         new URLSearchParams();
+
+
+    // Name filter
+    if (name) {
+
+        params.append(
+            "name",
+            name
+        );
+
+    }
 
 
     // Borough filter
@@ -314,77 +317,71 @@ function displayRestaurants(
     container.innerHTML = "";
 
 
-    restaurants.forEach(
-        (restaurant, index) => {
+    restaurants.forEach((restaurant, index) => {
 
-            const card =
-                document.createElement("div");
+        const card = document.createElement("div");
 
-
-            card.className =
-                "restaurant-card";
+        card.className = "restaurant-card";
 
 
-            const image =
-                foodImages[
-                    index % foodImages.length
-                ];
+        const image = foodImages[index % foodImages.length];
 
 
-            card.innerHTML = `
-
-                <div class="card-img-container">
-
-                    <img
-                        src="${image}"
-                        alt="${restaurant.name || "Restaurant"}"
-                        class="card-img"
-                    >
-
-                </div>
+        // Badge color depends on the grade
+        const gradeClass = ["A", "B", "C"].includes(restaurant.grade)
+            ? `grade-${restaurant.grade}`
+            : "grade-other";
 
 
-                <div class="card-body">
+        card.innerHTML = `
 
-                    <h3>
-                        ${restaurant.name || "Unnamed Restaurant"}
-                    </h3>
+            <div class="card-img-container">
 
+                <img
+                    src="${image}"
+                    alt="${restaurant.name || "Restaurant"}"
+                    class="card-img"
+                >
 
-                    <p class="card-cuisine">
-                        ${restaurant.cuisine || "N/A"}
-                    </p>
+                <div class="card-badges">
 
+                    <span class="badge badge-grade ${gradeClass}">
+                        Grade ${restaurant.grade || "N/A"}
+                    </span>
 
-                    <p class="card-borough">
-                        📍 ${restaurant.borough || "N/A"}
-                    </p>
-
-
-                    <div class="card-meta">
-
-                        <span class="badge badge-grade">
-                            Grade:
-                            ${restaurant.grade || "N/A"}
-                        </span>
-
-
-                        <span class="badge badge-score">
-                            Score:
-                            ${restaurant.score ?? "N/A"}
-                        </span>
-
-                    </div>
+                    <span class="badge badge-score">
+                        Score ${restaurant.score ?? "N/A"}
+                    </span>
 
                 </div>
 
-            `;
+            </div>
 
 
-            container.appendChild(card);
+            <div class="card-body">
 
-        }
-    );
+                <h3>
+                    ${restaurant.name || "Unnamed Restaurant"}
+                </h3>
+
+
+                <p class="card-cuisine">
+                    ${restaurant.cuisine || "N/A"}
+                </p>
+
+
+                <p class="card-borough">
+                    📍 ${restaurant.borough || "N/A"}
+                </p>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
 }
 
 
@@ -398,32 +395,16 @@ async function loadBestQuality() {
     container.innerHTML = "<p>Loading quality restaurants...</p>";
 
     try {
-        const response = await fetch("/api/restaurants?grade=A");
+        // Grade A, lowest scores first, no duplicates, only 6
+        const response = await fetch(
+            "/api/restaurants?grade=A&unique=true&sort=score&limit=6"
+        );
 
         if (!response.ok) {
             throw new Error("Failed to load Grade A restaurants.");
         }
 
-        const restaurants = await response.json();
-
-        // Remove duplicate restaurant names
-        const uniqueRestaurants = [];
-        const seenNames = new Set();
-
-        for (const restaurant of restaurants) {
-            if (!seenNames.has(restaurant.name)) {
-                seenNames.add(restaurant.name);
-                uniqueRestaurants.push(restaurant);
-            }
-        }
-
-        // Sort by lowest score first
-        uniqueRestaurants.sort((a, b) => {
-            return (a.score ?? 999) - (b.score ?? 999);
-        });
-
-        // Get the 6 best restaurants
-        const bestRestaurants = uniqueRestaurants.slice(0, 6);
+        const bestRestaurants = await response.json();
 
         container.innerHTML = "";
 
@@ -444,6 +425,11 @@ async function loadBestQuality() {
 // ===============================
 
 function resetFilters() {
+
+    document.getElementById(
+        "restaurantName"
+    ).value = "";
+
 
     document.getElementById(
         "borough"
