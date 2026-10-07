@@ -17,92 +17,24 @@ const foodImages = [
 // ===============================
 
 document.addEventListener("DOMContentLoaded", () => {
-    loadFeaturedRestaurants();
-});
-
-
-// ===============================
-// PAGE NAVIGATION
-// ===============================
-
-function showView(viewName) {
-
-    const views =
-        document.querySelectorAll(".page-view");
-
-    const navLinks =
-        document.querySelectorAll(".nav-link");
-
-
-    // Hide all pages
-    views.forEach(view => {
-        view.classList.add("hidden");
-    });
-
-
-    // Remove active navigation
-    navLinks.forEach(link => {
-        link.classList.remove("active");
-    });
-
 
     // Home
-    if (viewName === "home") {
-
-        document
-            .getElementById("home-view")
-            .classList.remove("hidden");
-
-        navLinks[0].classList.add("active");
+    if (document.getElementById("featuredRestaurants")) {
+        loadFeaturedRestaurants();
     }
-
-
-    // About
-    else if (viewName === "about") {
-
-        document
-            .getElementById("about-view")
-            .classList.remove("hidden");
-
-        navLinks[1].classList.add("active");
-    }
-
 
     // Restaurants
-    else if (viewName === "restaurants") {
-
-        document
-            .getElementById("restaurants-view")
-            .classList.remove("hidden");
-
-        navLinks[2].classList.add("active");
-
+    if (document.getElementById("restaurantList")) {
+        setupFilters();
         loadRestaurants();
     }
 
-
     // Best Quality
-    else if (viewName === "best-quality") {
-
-        document
-            .getElementById("best-quality-view")
-            .classList.remove("hidden");
-
-        navLinks[3].classList.add("active");
-
+    if (document.getElementById("bestQualityList")) {
         loadBestQuality();
     }
 
-
-    // Admin
-    else if (viewName === "admin") {
-
-        document
-            .getElementById("admin-view")
-            .classList.remove("hidden");
-
-    }
-}
+});
 
 
 // ===============================
@@ -110,11 +42,14 @@ function showView(viewName) {
 // ===============================
 
 async function loadFeaturedRestaurants() {
-    const featuredGrid = document.getElementById("featured-grid");
-    const countText = document.getElementById("featured-count-text");
+
+    const container =
+        document.getElementById("featuredRestaurants");
+
+    if (!container) return;
 
     try {
-        // The server removes duplicates and returns only 6
+
         const response = await fetch(
             "/api/restaurants?unique=true&limit=6"
         );
@@ -123,19 +58,40 @@ async function loadFeaturedRestaurants() {
             throw new Error("Failed to load restaurants.");
         }
 
-        const featured = await response.json();
+        const restaurants = await response.json();
 
-        featuredGrid.innerHTML = "";
-
-        countText.textContent =
-            `${featured.length} featured restaurants`;
-
-        displayRestaurants(featured, featuredGrid);
+        displayRestaurants(
+            restaurants,
+            container
+        );
 
     } catch (error) {
-        console.error("Error loading featured restaurants:", error);
-        countText.textContent = "Error loading restaurants.";
+
+        console.error(error);
+
+        container.innerHTML =
+            "<p>Failed to load restaurants.</p>";
+
     }
+}
+
+
+// ===============================
+// FILTER SETUP
+// ===============================
+
+function setupFilters() {
+    document.getElementById("nameFilter")?.addEventListener("input", loadRestaurants);
+
+    document.getElementById("boroughFilter")?.addEventListener("change", loadRestaurants);
+
+    document.getElementById("cuisine")?.addEventListener("change", loadRestaurants);
+
+    document.getElementById("gradeFilter")?.addEventListener("change", loadRestaurants);
+
+    document.getElementById("maxScoreFilter")?.addEventListener("input", loadRestaurants);
+
+    document.getElementById("resetFilters")?.addEventListener("click", resetFilters);
 }
 
 
@@ -145,134 +101,77 @@ async function loadFeaturedRestaurants() {
 
 async function loadRestaurants() {
 
-    const name =
-        document.getElementById("restaurantName").value.trim();
+    const results =
+        document.getElementById("restaurantList");
 
+    if (!results) return;
+
+
+    const name =
+        document.getElementById("nameFilter")?.value.trim();
 
     const borough =
-        document.getElementById("borough").value;
+        document.getElementById("boroughFilter")?.value;
 
-
-    const cuisine =
-        document.getElementById("cuisine").value;
-
+    const cuisine = 
+        document.getElementById("cuisine")?.value;
 
     const grade =
-        document.getElementById("grade").value;
-
+        document.getElementById("gradeFilter")?.value;
 
     const maxScore =
-        document.getElementById("maxScore").value;
+        document.getElementById("maxScoreFilter")?.value;
 
 
-    const results =
-        document.getElementById("results");
-
-
-    // Show loading message
     results.innerHTML =
         "<p>Loading restaurants...</p>";
 
 
-    // Create URL parameters
-    const params =
-        new URLSearchParams();
+    const params = new URLSearchParams();
 
 
-    // Name filter
-    if (name) {
+    if (name)
+        params.append("name", name);
 
-        params.append(
-            "name",
-            name
-        );
+    if (borough)
+        params.append("borough", borough);
 
-    }
+    if (cuisine)
+        params.append("cuisine", cuisine);
 
+    if (grade)
+        params.append("grade", grade);
 
-    // Borough filter
-    if (borough) {
-
-        params.append(
-            "borough",
-            borough
-        );
-
-    }
-
-
-    // Cuisine filter
-    if (cuisine) {
-
-        params.append(
-            "cuisine",
-            cuisine
-        );
-
-    }
-
-
-    // Grade filter
-    if (grade) {
-
-        params.append(
-            "grade",
-            grade
-        );
-
-    }
-
-
-    // Maximum Score filter
-    if (maxScore) {
-
-        params.append(
-            "maxScore",
-            maxScore
-        );
-
-    }
-
-
-    console.log(
-        "API Request:",
-        `/api/restaurants?${params.toString()}`
-    );
+    if (maxScore)
+        params.append("maxScore", maxScore);
 
 
     try {
 
-        const response =
-            await fetch(
-                `/api/restaurants?${params.toString()}`
-            );
-
+        const response = await fetch(
+            `/api/restaurants?${params.toString()}`
+        );
 
         if (!response.ok) {
+            throw new Error("Failed to retrieve restaurants.");
+        }
 
-            throw new Error(
-                "Failed to retrieve restaurant data."
-            );
+        const restaurants = await response.json();
 
+
+        // Count
+        const count =
+            document.getElementById("restaurantCount");
+
+        if (count) {
+            count.textContent =
+                `${restaurants.length} restaurants found`;
         }
 
 
-        const restaurants =
-            await response.json();
-
-
-        // Update result count
-        document.getElementById(
-            "results-count"
-        ).textContent =
-            `${restaurants.length} found`;
-
-
-        // Clear previous results
         results.innerHTML = "";
 
 
-        // No results
         if (restaurants.length === 0) {
 
             results.innerHTML =
@@ -282,21 +181,14 @@ async function loadRestaurants() {
         }
 
 
-        // Display restaurants
         displayRestaurants(
             restaurants,
             results
         );
 
-    }
+    } catch (error) {
 
-    catch (error) {
-
-        console.error(
-            "Error loading restaurants:",
-            error
-        );
-
+        console.error(error);
 
         results.innerHTML =
             "<p>Failed to retrieve restaurants.</p>";
@@ -311,77 +203,86 @@ async function loadRestaurants() {
 
 function displayRestaurants(
     restaurants,
-    container = document.getElementById("results")
+    container
 ) {
 
     container.innerHTML = "";
 
 
-    restaurants.forEach((restaurant, index) => {
+    restaurants.forEach(
+        (restaurant, index) => {
 
-        const card = document.createElement("div");
+            const card =
+                document.createElement("div");
 
-        card.className = "restaurant-card";
-
-
-        const image = foodImages[index % foodImages.length];
-
-
-        // Badge color depends on the grade
-        const gradeClass = ["A", "B", "C"].includes(restaurant.grade)
-            ? `grade-${restaurant.grade}`
-            : "grade-other";
+            card.className =
+                "restaurant-card";
 
 
-        card.innerHTML = `
+            const image =
+                foodImages[
+                    index % foodImages.length
+                ];
 
-            <div class="card-img-container">
 
-                <img
-                    src="${image}"
-                    alt="${restaurant.name || "Restaurant"}"
-                    class="card-img"
-                >
+            const grade =
+                restaurant.grade || "N/A";
 
-                <div class="card-badges">
 
-                    <span class="badge badge-grade ${gradeClass}">
-                        Grade ${restaurant.grade || "N/A"}
-                    </span>
+            const gradeClass =
+                ["A", "B", "C"].includes(grade)
+                    ? `grade-${grade}`
+                    : "grade-other";
 
-                    <span class="badge badge-score">
-                        Score ${restaurant.score ?? "N/A"}
-                    </span>
+
+            card.innerHTML = `
+
+                <div class="card-img-container">
+
+                    <img
+                        src="${image}"
+                        alt="${restaurant.name || "Restaurant"}"
+                        class="card-img"
+                    >
+
+                    <div class="card-badges">
+
+                        <span class="badge badge-grade ${gradeClass}">
+                            Grade ${grade}
+                        </span>
+
+                        <span class="badge badge-score">
+                            Score ${restaurant.score ?? "N/A"}
+                        </span>
+
+                    </div>
 
                 </div>
 
-            </div>
+
+                <div class="card-body">
+
+                    <h3>
+                        ${restaurant.name || "Unnamed Restaurant"}
+                    </h3>
+
+                    <p class="card-cuisine">
+                        ${restaurant.cuisine || "N/A"}
+                    </p>
+
+                    <p class="card-borough">
+                        📍 ${restaurant.borough || "N/A"}
+                    </p>
+
+                </div>
+
+            `;
 
 
-            <div class="card-body">
+            container.appendChild(card);
 
-                <h3>
-                    ${restaurant.name || "Unnamed Restaurant"}
-                </h3>
-
-
-                <p class="card-cuisine">
-                    ${restaurant.cuisine || "N/A"}
-                </p>
-
-
-                <p class="card-borough">
-                    📍 ${restaurant.borough || "N/A"}
-                </p>
-
-            </div>
-
-        `;
-
-
-        container.appendChild(card);
-
-    });
+        }
+    );
 }
 
 
@@ -390,32 +291,64 @@ function displayRestaurants(
 // ===============================
 
 async function loadBestQuality() {
-    const container = document.getElementById("quality-results");
 
-    container.innerHTML = "<p>Loading quality restaurants...</p>";
+    const container =
+        document.getElementById("bestQualityList");
+
+    if (!container) return;
+
+
+    container.innerHTML =
+        "<p>Loading quality restaurants...</p>";
+
 
     try {
-        // Grade A, lowest scores first, no duplicates, only 6
+
         const response = await fetch(
             "/api/restaurants?grade=A&unique=true&sort=score&limit=6"
         );
 
         if (!response.ok) {
-            throw new Error("Failed to load Grade A restaurants.");
+            throw new Error("Failed to load quality restaurants.");
         }
 
-        const bestRestaurants = await response.json();
+        const restaurants =
+            await response.json();
+
 
         container.innerHTML = "";
 
+
+        if (restaurants.length === 0) {
+
+            container.innerHTML =
+                "<p>No quality restaurants found.</p>";
+
+            return;
+        }
+
+
+        const count =
+            document.getElementById("bestQualityCount");
+
+        if (count) {
+            count.textContent =
+                `${restaurants.length} restaurants`;
+        }
+
+
         displayRestaurants(
-            bestRestaurants,
+            restaurants,
             container
         );
 
     } catch (error) {
-        console.error("Error loading best quality restaurants:", error);
-        container.innerHTML = "<p>Failed to load quality restaurants.</p>";
+
+        console.error(error);
+
+        container.innerHTML =
+            "<p>Failed to load quality restaurants.</p>";
+
     }
 }
 
@@ -426,30 +359,11 @@ async function loadBestQuality() {
 
 function resetFilters() {
 
-    document.getElementById(
-        "restaurantName"
-    ).value = "";
-
-
-    document.getElementById(
-        "borough"
-    ).value = "";
-
-
-    document.getElementById(
-        "cuisine"
-    ).value = "";
-
-
-    document.getElementById(
-        "grade"
-    ).value = "";
-
-
-    document.getElementById(
-        "maxScore"
-    ).value = "";
-
+    document.getElementById("nameFilter").value = "";
+    document.getElementById("boroughFilter").value = "";
+    document.getElementById("cuisine").value = "";
+    document.getElementById("gradeFilter").value = "";
+    document.getElementById("maxScoreFilter").value = "";
 
     loadRestaurants();
 }

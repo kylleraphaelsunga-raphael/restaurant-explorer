@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dine & Seek | Admin Login</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+
+            <a href="index.html" class="logo">
+                Dine & Seek
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="restaurants.html">Restaurants</a>
+                <a href="best-quality.html">Best Quality</a>
+                <a href="admin-login.html" class="active">Admin Login</a>
+            </div>
+
+        </div>
+    </nav>
+
+
+    <!-- Admin Login -->
+    <main class="login-page">
+
+        <div class="login-container">
+
+            <div class="login-card">
+
+                <div class="login-header">
+
+                    <p class="section-label">
+                        ADMIN AREA
+                    </p>
+
+                    <h1>
+                        Welcome Back
+                    </h1>
+
+                    <p>
+                        Sign in to manage the Dine & Seek
+                        restaurant database.
+                    </p>
+
+                </div>
+
+
+                <form id="adminLoginForm">
+
+                    <!-- Username -->
+                    <div class="filter-group">
+
+                        <label for="adminUsername">
+                            Username
+                        </label>
+
+                        <input
+                            type="text"
+                            id="adminUsername"
+                            name="username"
+                            placeholder="Enter username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="filter-group">
+
+                        <label for="adminPassword">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="adminPassword"
+                            name="password"
+                            placeholder="Enter password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Login Button -->
+                    <button
+                        type="submit"
+                        class="hero-button login-button"
+                    >
+                        Login
+                    </button>
+
+
+                    <!-- Error Message -->
+                    <p
+                        id="loginError"
+                        class="login-error"
+                        style="display: none;"
+                    >
+                        Invalid username or password.
+                    </p>
+
+                </form>
+
+
+                <div class="login-back">
+
+                    <a href="index.html">
+                        ← Back to Home
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <div>
+
+                <h3>Dine & Seek</h3>
+
+                <p>
+                    Seek it. Find it. Dine it.
+                    Your guide to discovering restaurants.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="restaurants.html">Restaurants</a>
+                <a href="best-quality.html">Best Quality</a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 Dine & Seek. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

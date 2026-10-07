@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dine & Seek | Restaurants</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+
+            <a href="index.html" class="logo">
+                Dine & Seek
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="restaurants.html" class="active">Restaurants</a>
+                <a href="best-quality.html">Best Quality</a>
+                <a href="admin-login.html">Admin Login</a>
+            </div>
+
+        </div>
+    </nav>
+
+
+    <!-- Page Header -->
+    <section class="page-header">
+
+        <div class="page-header-content">
+
+            <p class="hero-label">EXPLORE</p>
+
+            <h1>
+                Find Your<br>
+                Next Place to Dine.
+            </h1>
+
+            <p>
+                Search and filter restaurants based on
+                what you are looking for.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- Restaurant Explorer -->
+    <section class="restaurant-section">
+
+        <div class="restaurant-container">
+
+            <!-- Filters -->
+            <div class="filter-panel">
+
+                <div class="filter-header">
+
+                    <div>
+                        <p class="section-label">SEARCH & FILTER</p>
+
+                        <h2>
+                            Find a Restaurant
+                        </h2>
+                    </div>
+
+                    <button id="resetFilters" class="reset-button">
+                        Reset Filters
+                    </button>
+
+                </div>
+
+
+                <div class="filter-grid">
+
+                    <!-- Restaurant Name -->
+                    <div class="filter-group">
+
+                        <label for="nameFilter">
+                            Restaurant Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nameFilter"
+                            placeholder="Search by name..."
+                        >
+
+                    </div>
+
+
+                    <!-- Borough -->
+                    <div class="filter-group">
+
+                        <label for="boroughFilter">
+                            Borough
+                        </label>
+
+                        <select id="boroughFilter">
+
+                            <option value="">
+                                All Boroughs
+                            </option>
+
+                            <option value="Bronx">
+                                Bronx
+                            </option>
+
+                            <option value="Brooklyn">
+                                Brooklyn
+                            </option>
+
+                            <option value="Manhattan">
+                                Manhattan
+                            </option>
+
+                            <option value="Queens">
+                                Queens
+                            </option>
+
+                            <option value="Staten Island">
+                                Staten Island
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Cuisine -->
+                    <div class="filter-group">
+
+                        <label for="cuisine">
+                            Cuisine
+                        </label>
+
+                        <select id="cuisine">
+
+                            <option value="">
+                                All Cuisines
+                            </option>
+
+                            <option value="American ">
+                                American
+                            </option>
+
+                            <option value="Chinese">
+                                Chinese
+                            </option>
+
+                            <option value="Bakery">
+                                Bakery
+                            </option>
+
+                            <option value="Pizza">
+                                Pizza
+                            </option>
+
+                            <option value="Hamburgers">
+                                Hamburgers
+                            </option>
+
+                            <option value="Italian">
+                                Italian
+                            </option>
+
+                            <option value="Delicatessen">
+                                Delicatessen
+                            </option>
+
+                            <option value="French">
+                                French
+                            </option>
+
+                            <option value="Japanese">
+                                Japanese
+                            </option>
+
+                            <option value="Mexican">
+                                Mexican
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Grade -->
+                    <div class="filter-group">
+
+                        <label for="gradeFilter">
+                            Grade
+                        </label>
+
+                        <select id="gradeFilter">
+
+                            <option value="">
+                                All Grades
+                            </option>
+
+                            <option value="A">
+                                Grade A
+                            </option>
+
+                            <option value="B">
+                                Grade B
+                            </option>
+
+                            <option value="C">
+                                Grade C
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Maximum Score -->
+                    <div class="filter-group">
+
+                        <label for="maxScoreFilter">
+                            Maximum Score
+                        </label>
+
+                        <input
+                            type="number"
+                            id="maxScoreFilter"
+                            min="0"
+                            placeholder="e.g. 20"
+                        >
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Results Header -->
+            <div class="results-header">
+
+                <div>
+                    <p class="section-label">RESTAURANTS</p>
+
+                    <h2>
+                        Explore Restaurants
+                    </h2>
+                </div>
+
+                <p id="restaurantCount">
+                    Loading restaurants...
+                </p>
+
+            </div>
+
+
+            <!-- Restaurant Results -->
+            <div
+                id="restaurantList"
+                class="restaurant-grid"
+            >
+                <!-- Restaurant cards will be inserted here by script.js -->
+            </div>
+
+
+            <!-- Loading Message -->
+            <div
+                id="loadingMessage"
+                class="loading-message"
+            >
+                Loading restaurants...
+            </div>
+
+
+            <!-- No Results -->
+            <div
+                id="noResults"
+                class="no-results"
+                style="display: none;"
+            >
+
+                <h3>
+                    No restaurants found
+                </h3>
+
+                <p>
+                    Try changing your filters or search terms.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <div>
+
+                <h3>Dine & Seek</h3>
+
+                <p>
+                    Seek it. Find it. Dine it.
+                    Your guide to discovering restaurants.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="restaurants.html">Restaurants</a>
+                <a href="best-quality.html">Best Quality</a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 Dine & Seek. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

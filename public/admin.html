@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dine & Seek | Admin Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+
+            <a href="index.html" class="logo">
+                Dine & Seek
+            </a>
+
+            <div class="nav-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+                <a href="restaurants.html">
+                    Restaurants
+                </a>
+
+                <a href="best-quality.html">
+                    Best Quality
+                </a>
+
+                <a href="admin.html" class="active">
+                    Admin
+                </a>
+
+            </div>
+
+        </div>
+    </nav>
+
+
+    <!-- Admin Dashboard -->
+    <main class="admin-page">
+
+        <div class="admin-container">
+
+            <!-- Dashboard Header -->
+            <div class="admin-header">
+
+                <div>
+
+                    <p class="section-label">
+                        ADMINISTRATION
+                    </p>
+
+                    <h1>
+                        Restaurant Management
+                    </h1>
+
+                    <p>
+                        Manage the restaurants stored in the
+                        Dine & Seek database.
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="adminLogout"
+                    class="reset-button"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+
+            <!-- Add Restaurant -->
+            <section class="admin-card">
+
+                <div class="admin-card-header">
+
+                    <div>
+
+                        <p class="section-label">
+                            CREATE
+                        </p>
+
+                        <h2>
+                            Add Restaurant
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <form id="restaurantForm">
+
+                    <div class="admin-form-grid">
+
+                        <!-- Restaurant Name -->
+                        <div class="filter-group">
+
+                            <label for="restaurantName">
+                                Restaurant Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="restaurantName"
+                                name="name"
+                                placeholder="Enter restaurant name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Borough -->
+                        <div class="filter-group">
+
+                            <label for="restaurantBorough">
+                                Borough
+                            </label>
+
+                            <input
+                                type="text"
+                                id="restaurantBorough"
+                                name="borough"
+                                placeholder="Enter borough"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Cuisine -->
+                        <div class="filter-group">
+
+                            <label for="restaurantCuisine">
+                                Cuisine
+                            </label>
+
+                            <input
+                                type="text"
+                                id="restaurantCuisine"
+                                name="cuisine"
+                                placeholder="Enter cuisine"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Grade -->
+                        <div class="filter-group">
+
+                            <label for="restaurantGrade">
+                                Grade
+                            </label>
+
+                            <select
+                                id="restaurantGrade"
+                                name="grade"
+                                required
+                            >
+
+                                <option value="">
+                                    Select Grade
+                                </option>
+
+                                <option value="A">
+                                    A
+                                </option>
+
+                                <option value="B">
+                                    B
+                                </option>
+
+                                <option value="C">
+                                    C
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Score -->
+                        <div class="filter-group">
+
+                            <label for="restaurantScore">
+                                Score
+                            </label>
+
+                            <input
+                                type="number"
+                                id="restaurantScore"
+                                name="score"
+                                min="0"
+                                placeholder="Enter score"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Restaurant ID -->
+                        <div class="filter-group">
+
+                            <label for="restaurantId">
+                                Restaurant ID
+                            </label>
+
+                            <input
+                                type="text"
+                                id="restaurantId"
+                                name="restaurant_id"
+                                placeholder="Enter restaurant ID"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="admin-form-actions">
+
+                        <button
+                            type="submit"
+                            class="hero-button"
+                        >
+                            Add Restaurant
+                        </button>
+
+                        <button
+                            type="button"
+                            id="cancelEdit"
+                            class="reset-button"
+                            style="display: none;"
+                        >
+                            Cancel Edit
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+                <p
+                    id="adminMessage"
+                    class="admin-message"
+                    style="display: none;"
+                ></p>
+
+            </section>
+
+
+            <!-- Restaurant Records -->
+            <section class="admin-card">
+
+                <div class="admin-card-header">
+
+                    <div>
+
+                        <p class="section-label">
+                            DATABASE
+                        </p>
+
+                        <h2>
+                            Restaurant Records
+                        </h2>
+
+                    </div>
+
+                    <button
+                        id="refreshRestaurants"
+                        class="reset-button"
+                    >
+                        Refresh
+                    </button>
+
+                </div>
+
+
+                <!-- Admin Search -->
+                <div class="admin-search">
+
+                    <input
+                        type="text"
+                        id="adminSearch"
+                        placeholder="Search restaurant records..."
+                    >
+
+                </div>
+
+
+                <!-- Table -->
+                <div class="admin-table-container">
+
+                    <table class="admin-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Restaurant
+                                </th>
+
+                                <th>
+                                    Borough
+                                </th>
+
+                                <th>
+                                    Cuisine
+                                </th>
+
+                                <th>
+                                    Grade
+                                </th>
+
+                                <th>
+                                    Score
+                                </th>
+
+                                <th>
+                                    Actions
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="adminRestaurantList">
+
+                            <tr>
+
+                                <td
+                                    colspan="6"
+                                    class="loading-table"
+                                >
+                                    Loading restaurants...
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- No Records -->
+                <div
+                    id="adminNoResults"
+                    class="no-results"
+                    style="display: none;"
+                >
+
+                    <h3>
+                        No restaurants found
+                    </h3>
+
+                    <p>
+                        There are currently no restaurant
+                        records to display.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <div>
+
+                <h3>
+                    Dine & Seek
+                </h3>
+
+                <p>
+                    Seek it. Find it. Dine it.
+                    Your guide to discovering restaurants.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+                <a href="restaurants.html">
+                    Restaurants
+                </a>
+
+                <a href="best-quality.html">
+                    Best Quality
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 Dine & Seek. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
