@@ -7,9 +7,14 @@
     <title>Dine & Seek | Home</title>
 
     <link rel="stylesheet" href="style.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 </head>
 
 <body>
@@ -43,12 +48,15 @@
         </div>
     </nav>
 
+
     <!-- Hero Section -->
     <section class="hero">
 
         <div class="hero-content">
 
-            <p class="hero-label">RESTAURANT EXPLORER</p>
+            <p class="hero-label">
+                RESTAURANT EXPLORER
+            </p>
 
             <h1>
                 Seek It.<br>
@@ -74,26 +82,225 @@
     <section class="featured-section">
 
         <div class="section-header">
+
             <div>
-                <p class="section-label">FEATURED</p>
+
+                <p class="section-label">
+                    FEATURED
+                </p>
 
                 <h2>
                     Places Worth<br>
                     Seeking
                 </h2>
+
             </div>
 
             <a href="restaurants.html" class="view-all">
                 View All Restaurants →
             </a>
+
         </div>
 
 
-        <div id="featuredRestaurants" class="restaurant-grid">
+        <!-- Six Featured Restaurants -->
+        <div
+            id="featuredRestaurants"
+            class="restaurant-grid"
+        >
             <!-- Featured restaurants will be loaded by script.js -->
         </div>
 
     </section>
+
+
+    <!-- Restaurant Details Modal -->
+    <div
+        id="restaurantModal"
+        class="restaurant-modal"
+        aria-hidden="true"
+    >
+
+        <div
+            class="restaurant-modal-overlay"
+            id="restaurantModalOverlay"
+        ></div>
+
+
+        <div
+            class="restaurant-modal-content"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="restaurantModalName"
+        >
+
+            <button
+                type="button"
+                class="restaurant-modal-close"
+                id="restaurantModalClose"
+                aria-label="Close restaurant details"
+            >
+                ×
+            </button>
+
+
+            <!-- Restaurant Image -->
+            <div class="restaurant-modal-image-container">
+
+                <img
+                    id="restaurantModalImage"
+                    src=""
+                    alt="Restaurant"
+                    class="restaurant-modal-image"
+                >
+
+            </div>
+
+
+            <!-- Restaurant Information -->
+            <div class="restaurant-modal-body">
+
+                <p
+                    id="restaurantModalCuisine"
+                    class="restaurant-modal-cuisine"
+                >
+                    Cuisine
+                </p>
+
+
+                <h2 id="restaurantModalName">
+                    Restaurant Name
+                </h2>
+
+
+                <!-- Grade and Score -->
+                <div class="restaurant-modal-rating">
+
+                    <span
+                        id="restaurantModalGrade"
+                        class="badge badge-grade"
+                    >
+                        Grade —
+                    </span>
+
+                    <span
+                        id="restaurantModalScore"
+                        class="badge badge-score"
+                    >
+                        Score —
+                    </span>
+
+                </div>
+
+
+                <p
+                    id="restaurantModalDescription"
+                    class="restaurant-modal-description"
+                >
+                    Restaurant description.
+                </p>
+
+
+                <div class="restaurant-info-grid">
+
+                    <div class="restaurant-info-item">
+
+                        <span class="restaurant-info-label">
+                            Location
+                        </span>
+
+                        <span id="restaurantModalLocation">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div class="restaurant-info-item">
+
+                        <span class="restaurant-info-label">
+                            Address
+                        </span>
+
+                        <span id="restaurantModalAddress">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div class="restaurant-info-item">
+
+                        <span class="restaurant-info-label">
+                            Opening Hours
+                        </span>
+
+                        <span id="restaurantModalHours">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div class="restaurant-info-item">
+
+                        <span class="restaurant-info-label">
+                            Days Open
+                        </span>
+
+                        <span id="restaurantModalDays">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div class="restaurant-info-item">
+
+                        <span class="restaurant-info-label">
+                            Contact
+                        </span>
+
+                        <span id="restaurantModalContact">
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div class="restaurant-info-item">
+
+                        <span class="restaurant-info-label">
+                            Price Range
+                        </span>
+
+                        <span id="restaurantModalPrice">
+                            —
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Additional Information -->
+                <div class="restaurant-additional">
+
+                    <h3>
+                        Additional Information
+                    </h3>
+
+                    <p id="restaurantModalAdditional">
+                        —
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 
     <!-- Footer -->
@@ -102,27 +309,48 @@
         <div class="footer-container">
 
             <div>
-                <h3>Dine & Seek</h3>
+
+                <h3>
+                    Dine & Seek
+                </h3>
 
                 <p>
                     Seek it. Find it. Dine it.
                     Your guide to discovering restaurants.
                 </p>
+
             </div>
+
 
             <div class="footer-links">
 
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="restaurants.html">Restaurants</a>
-                <a href="best-quality.html">Best Quality</a>
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="about.html">
+                    About
+                </a>
+
+                <a href="restaurants.html">
+                    Restaurants
+                </a>
+
+                <a href="best-quality.html">
+                    Best Quality
+                </a>
 
             </div>
 
         </div>
 
+
         <div class="footer-bottom">
-            <p>© 2026 Dine & Seek. All rights reserved.</p>
+
+            <p>
+                © 2026 Dine & Seek. All rights reserved.
+            </p>
+
         </div>
 
     </footer>
