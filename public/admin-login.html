@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,35 +11,24 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 </head>
 
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-
-            <a href="index.html" class="logo">
-                Dine & Seek
-            </a>
-
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="restaurants.html">Restaurants</a>
-                <a href="best-quality.html">Best Quality</a>
-                <a href="admin-login.html" class="active">Admin Login</a>
-            </div>
-
-        </div>
-    </nav>
-
-
-    <!-- Admin Login -->
     <main class="login-page">
 
         <div class="login-container">
+
+            <div class="login-brand">
+                <a href="index.html">
+                    Dine & Seek
+                </a>
+            </div>
 
             <div class="login-card">
 
@@ -59,10 +49,8 @@
 
                 </div>
 
-
                 <form id="adminLoginForm">
 
-                    <!-- Username -->
                     <div class="filter-group">
 
                         <label for="adminUsername">
@@ -79,8 +67,6 @@
 
                     </div>
 
-
-                    <!-- Password -->
                     <div class="filter-group">
 
                         <label for="adminPassword">
@@ -97,8 +83,6 @@
 
                     </div>
 
-
-                    <!-- Login Button -->
                     <button
                         type="submit"
                         class="hero-button login-button"
@@ -106,8 +90,6 @@
                         Login
                     </button>
 
-
-                    <!-- Error Message -->
                     <p
                         id="loginError"
                         class="login-error"
@@ -118,6 +100,54 @@
 
                 </form>
 
+                <!-- Demo Account -->
+
+                <div class="demo-login">
+
+                    <button
+                        type="button"
+                        id="demoToggle"
+                        class="demo-toggle"
+                    >
+                        Demo Account Login Details
+                    </button>
+
+                    <div
+                        id="demoDetails"
+                        class="demo-details"
+                        style="display: none;"
+                    >
+
+                        <p>
+                            Use the demo account below to access
+                            the Admin Dashboard.
+                        </p>
+
+                        <div class="demo-credentials">
+
+                            <p>
+                                <strong>Username:</strong>
+                                <span>admin</span>
+                            </p>
+
+                            <p>
+                                <strong>Password:</strong>
+                                <span>admin123</span>
+                            </p>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="useDemoAccount"
+                            class="demo-button"
+                        >
+                            Use Demo Account
+                        </button>
+
+                    </div>
+
+                </div>
 
                 <div class="login-back">
 
@@ -132,49 +162,8 @@
         </div>
 
     </main>
-
-
-    <!-- Footer -->
-    <footer class="footer">
-
-        <div class="footer-container">
-
-            <div>
-
-                <h3>Dine & Seek</h3>
-
-                <p>
-                    Seek it. Find it. Dine it.
-                    Your guide to discovering restaurants.
-                </p>
-
-            </div>
-
-
-            <div class="footer-links">
-
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="restaurants.html">Restaurants</a>
-                <a href="best-quality.html">Best Quality</a>
-
-            </div>
-
-        </div>
-
-
-        <div class="footer-bottom">
-
-            <p>
-                © 2026 Dine & Seek. All rights reserved.
-            </p>
-
-        </div>
-
-    </footer>
-
-
-    <script src="script.js"></script>
+    <script src="admin-login.js"></script>
 
 </body>
+
 </html>

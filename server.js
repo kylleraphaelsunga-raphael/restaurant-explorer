@@ -5,6 +5,29 @@ const path = require("path");
 const app = express();
 const PORT = 3000;
 
+// Demo Admin Account
+const ADMIN_USERNAME = "admin";
+const ADMIN_PASSWORD = "admin123";
+
+// Admin Login
+app.post("/api/admin/login", (req, res) => {
+
+    const { username, password } = req.body;
+
+    if (
+        username === ADMIN_USERNAME &&
+        password === ADMIN_PASSWORD
+    ) {
+        return res.json({
+            success: true
+        });
+    }
+
+    res.status(401).json({
+        error: "Invalid username or password."
+    });
+});
+
 app.use(express.json());
 
 // Public folder
@@ -38,6 +61,25 @@ async function connectDB() {
 function escapeRegex(text) {
     return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
+
+// Admin Login
+app.post("/api/admin/login", (req, res) => {
+
+    const { username, password } = req.body;
+
+    if (
+        username === ADMIN_USERNAME &&
+        password === ADMIN_PASSWORD
+    ) {
+        return res.json({
+            success: true
+        });
+    }
+
+    res.status(401).json({
+        error: "Invalid username or password."
+    });
+});
 
 // Get restaurants
 app.get("/api/restaurants", async (req, res) => {
@@ -159,6 +201,33 @@ app.get("/api/restaurants", async (req, res) => {
             error: "Unable to load restaurant data from MongoDB"
         });
     }
+});
+
+// ======================================
+// ADMIN LOGIN
+// ======================================
+
+app.post("/api/admin/login", (req, res) => {
+
+    const { username, password } = req.body;
+
+    // Demo account
+    if (
+        username === "admin" &&
+        password === "admin123"
+    ) {
+
+        return res.json({
+            success: true,
+            message: "Admin login successful"
+        });
+
+    }
+
+    res.status(401).json({
+        error: "Invalid username or password."
+    });
+
 });
 
 // Connect to MongoDB first, then start the server

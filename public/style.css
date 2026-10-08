@@ -116,7 +116,6 @@ button {
     border-bottom-color: var(--orange);
 }
 
-
 /* ---------- Shared type and buttons ---------- */
 .section-label {
     color: var(--orange-text);
@@ -323,32 +322,6 @@ button {
     font-size: 0.85rem;
 }
 
-
-/* ---------- Page headers (restaurants, best quality) ---------- */
-.page-header {
-    background-color: var(--navy);
-    color: #ffffff;
-    text-align: center;
-    padding: 4rem 5%;
-}
-
-.page-header-content {
-    max-width: 650px;
-    margin: 0 auto;
-}
-
-.page-header h1 {
-    font-size: 2.5rem;
-    font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 0.75rem;
-}
-
-.page-header p:last-child {
-    color: var(--gray-300);
-}
-
-
 /* ---------- Restaurants / best quality sections ---------- */
 .restaurant-section {
     padding: 3rem 5%;
@@ -451,29 +424,6 @@ input:focus {
 
 
 /* ---------- About page ---------- */
-.about-hero {
-    background-color: var(--navy);
-    color: #ffffff;
-    text-align: center;
-    padding: 5rem 5%;
-}
-
-.about-hero-content {
-    max-width: 650px;
-    margin: 0 auto;
-}
-
-.about-hero h1 {
-    font-size: 2.75rem;
-    font-weight: 800;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-}
-
-.about-hero-content > p:last-child {
-    color: var(--gray-300);
-}
-
 .about-section {
     padding: 4rem 5%;
 }
@@ -569,12 +519,32 @@ input:focus {
     margin-bottom: 1.5rem;
 }
 
+/* ---------- Admin Login Brand ---------- */
 
+.login-brand {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.login-brand a {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--navy);
+    text-decoration: none;
+}
 /* ---------- Admin login ---------- */
+
 .login-page {
-    min-height: 65vh;
+    min-height: 100vh;
     padding: 4rem 5%;
-    background-color: var(--gray-50);
+    background-image:
+        linear-gradient(
+            rgba(17, 24, 39, 0.75),
+            rgba(17, 24, 39, 0.75)
+        ),
+        url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80');
+    background-size: cover;
+    background-position: center;
 }
 
 .login-container {
@@ -587,7 +557,7 @@ input:focus {
     border: 1px solid var(--gray-200);
     border-radius: var(--radius);
     padding: 2rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
 }
 
 .login-header {
@@ -609,9 +579,21 @@ input:focus {
     margin-bottom: 1rem;
 }
 
+#adminLoginForm input:focus {
+    border-color: #e67e22;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.12);
+}
+
 .login-button {
     width: 100%;
     margin-top: 0.5rem;
+    background-color: #e67e22;
+    color: #ffffff;
+}
+
+.login-button:hover {
+    background-color: #d96f18;
 }
 
 .login-error {
@@ -634,10 +616,92 @@ input:focus {
 }
 
 .login-back a:hover {
-    color: var(--navy);
+    color: #e67e22;
     text-decoration: underline;
 }
+/* ---------- Demo account ---------- */
 
+.demo-login {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray-200);
+}
+
+.demo-toggle {
+    width: 100%;
+    padding: 0.7rem 0.8rem;
+    background-color: var(--gray-50);
+    color: var(--navy);
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.demo-toggle:hover {
+    background-color: var(--gray-100);
+    border-color: var(--gray-300);
+}
+
+.demo-details {
+    margin-top: 0.8rem;
+    padding: 1rem;
+    background-color: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+}
+
+.demo-details > p {
+    margin-bottom: 0.8rem;
+    color: var(--gray-600);
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.demo-credentials {
+    padding: 0.7rem 0.8rem;
+    margin-bottom: 0.8rem;
+    background-color: #ffffff;
+    border: 1px solid var(--gray-200);
+    border-radius: 5px;
+}
+
+.demo-credentials p {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.3rem 0;
+    font-size: 0.8rem;
+}
+
+.demo-credentials strong {
+    color: var(--navy);
+}
+
+.demo-credentials span {
+    color: var(--gray-600);
+    font-family: monospace;
+}
+
+.demo-button {
+    width: 100%;
+    padding: 0.65rem 0.8rem;
+    background-color: var(--navy);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.demo-button:hover {
+    opacity: 0.9;
+}
 
 /* ---------- Admin dashboard ---------- */
 .admin-page {
@@ -798,7 +862,6 @@ input:focus {
     background-color: #fee2e2;
 }
 
-
 /* ---------- Footer ---------- */
 .footer {
     background-color: var(--navy);
@@ -846,9 +909,28 @@ input:focus {
     color: var(--gray-500);
 }
 
+/* ---------- Mobile Navigation ---------- */
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    margin: 5px 0;
+    background-color: var(--navy);
+}
 
 /* ---------- Responsive ---------- */
+
 @media (max-width: 800px) {
+
     .hero {
         padding: 4rem 5%;
     }
@@ -871,15 +953,61 @@ input:focus {
         grid-template-columns: 1fr;
     }
 
+    /* Mobile Navigation */
     .nav-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        position: relative;
+    }
+
+    .logo {
+        flex-shrink: 0;
+    }
+
+    .menu-toggle {
+        display: block;
+        flex-shrink: 0;
+        margin-left: auto;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
         flex-direction: column;
-        align-items: flex-start;
+        gap: 0;
+        padding: 0.5rem 0;
+        background-color: #ffffff;
+        border-top: 1px solid var(--gray-200);
+        border-bottom: 1px solid var(--gray-200);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        z-index: 1000;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.8rem 5%;
+    }
+
+    .nav-links a:hover {
+        background-color: var(--gray-50);
     }
 }
 
 @media (max-width: 480px) {
+
     .nav-links {
-        gap: 1rem;
+        gap: 0;
     }
 
     .restaurant-grid {
@@ -890,8 +1018,8 @@ input:focus {
     .admin-card {
         padding: 1.25rem;
     }
-}
 
+}
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {

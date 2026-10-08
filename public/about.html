@@ -14,7 +14,7 @@
 </head>
 
 <body>
-
+    
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -23,9 +23,19 @@
                 Dine & Seek
             </a>
 
-            <div class="nav-links">
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Open navigation menu"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="nav-links" id="navLinks">
                 <a href="index.html">Home</a>
-                <a href="about.html" class="active">About</a>
+                <a href="about.html">About</a>
                 <a href="restaurants.html">Restaurants</a>
                 <a href="best-quality.html">Best Quality</a>
                 <a href="admin-login.html">Admin Login</a>
@@ -34,11 +44,10 @@
         </div>
     </nav>
 
-
     <!-- About Hero -->
-    <section class="about-hero">
+    <section class="hero">
 
-        <div class="about-hero-content">
+        <div class="hero-content">
 
             <p class="hero-label">ABOUT DINE & SEEK</p>
 
