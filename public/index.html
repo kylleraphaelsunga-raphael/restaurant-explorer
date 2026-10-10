@@ -5,15 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Dine & Seek | Home</title>
-
     <link rel="stylesheet" href="style.css">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     >
 </head>
 
@@ -38,7 +34,7 @@
             </button>
 
             <div class="nav-links" id="navLinks">
-                <a href="index.html">Home</a>
+                <a href="index.html" class="active">Home</a>
                 <a href="about.html">About</a>
                 <a href="restaurants.html">Restaurants</a>
                 <a href="best-quality.html">Best Quality</a>
@@ -296,6 +292,34 @@
 
                 </div>
 
+                <!-- Restaurant Location Map -->
+                <div class="restaurant-map-section">
+                    <h3>Restaurant Location</h3>
+
+                    <p id="restaurantMapStatus" class="restaurant-map-status">
+                        Open a restaurant to view its location.
+                    </p>
+
+                    <div
+                        id="restaurantMap"
+                        class="restaurant-map"
+                        role="application"
+                        aria-label="Interactive restaurant location map"
+                    ></div>
+
+                    <a
+                        id="restaurantDirectionsLink"
+                        class="restaurant-directions-button"
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        hidden
+                    >
+                        Get Directions
+                    </a>
+                </div>
+
+
             </div>
 
         </div>
@@ -356,7 +380,14 @@
     </footer>
 
 
+    <!-- Leaflet Map Library -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Existing Restaurant Functionality -->
     <script src="script.js"></script>
+
+    <!-- Separate Map Functionality -->
+    <script src="map.js"></script>
 
 </body>
 </html>

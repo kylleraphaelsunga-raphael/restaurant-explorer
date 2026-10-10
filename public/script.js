@@ -16,9 +16,14 @@ const foodImages = [
 // ===============================
 
 const featuredInfo = {
+
+    // =====================================
+    // FEATURED RESTAURANTS
+    // =====================================
+
     "Locanda Vini E Olii": {
         description: "A cozy Italian restaurant offering traditional Italian dishes in a warm and welcoming setting.",
-        address: "1290 Myrtle Avenue, Brooklyn, New York",
+        address: "Biddrina Gelato, 129, Gates Avenue, Brooklyn, Kings County, New York, 11238, United States",
         openingTime: "11:30 AM",
         closingTime: "10:00 PM",
         daysOpen: "Monday - Sunday",
@@ -80,7 +85,79 @@ const featuredInfo = {
         contact: "(718) 555-5678",
         priceRange: "$",
         additional: "Coffee, light meals, dine-in, and takeout available."
+    },
+
+
+    // =====================================
+    // BEST QUALITY RESTAURANTS
+    // =====================================
+
+    "B66 Club": {
+        description: "A Brooklyn restaurant listed under Russian cuisine, offering a casual dining experience.",
+        address: "66 Greenpoint Avenue, Brooklyn, New York 11222",
+        openingTime: "11:00 AM",
+        closingTime: "10:00 PM",
+        daysOpen: "Monday - Sunday",
+        contact: "(718) 555-2101",
+        priceRange: "$$",
+        additional: "Sample information includes dine-in service and a relaxed setting for casual meals."
+    },
+
+    "Bagel Shoppe": {
+        description: "A Queens establishment specializing in bagels, pretzels, and convenient breakfast options.",
+        address: "125 Queens Boulevard, Queens, New York 11375",
+        openingTime: "6:00 AM",
+        closingTime: "7:00 PM",
+        daysOpen: "Monday - Sunday",
+        contact: "(718) 555-2102",
+        priceRange: "$",
+        additional: "Sample information includes breakfast, takeaway orders, and quick snacks."
+    },
+
+    "Belaire Cafe": {
+        description: "A Manhattan cafe listed under American cuisine, suitable for casual everyday dining.",
+        address: "245 Madison Avenue, New York, New York 10016",
+        openingTime: "7:00 AM",
+        closingTime: "9:00 PM",
+        daysOpen: "Monday - Sunday",
+        contact: "(212) 555-2103",
+        priceRange: "$$",
+        additional: "Sample information includes a relaxed setting for breakfast, lunch, and casual meetups."
+    },
+
+    "Brooklyn Diner": {
+        description: "A diner-style restaurant listed under American cuisine, offering a familiar and welcoming dining atmosphere.",
+        address: "212 West 57th Street, New York, New York 10019",
+        openingTime: "8:00 AM",
+        closingTime: "11:00 PM",
+        daysOpen: "Monday - Sunday",
+        contact: "(212) 555-2104",
+        priceRange: "$$",
+        additional: "Sample information includes breakfast, lunch, dinner, and casual dining."
+    },
+
+    "Cambridge Caterers": {
+        description: "A Manhattan establishment listed under American cuisine, with a name suggesting catering services.",
+        address: "350 West 42nd Street, New York, New York 10036",
+        openingTime: "8:00 AM",
+        closingTime: "6:00 PM",
+        daysOpen: "Monday - Saturday",
+        contact: "(212) 555-2105",
+        priceRange: "$$",
+        additional: "Sample information includes catering inquiries, group orders, and event food services."
+    },
+
+    "Circle In The Square Theatre": {
+        description: "A Manhattan theatre venue that appears under American cuisine in your restaurant dataset.",
+        address: "235 West 50th Street, New York, New York 10019",
+        openingTime: "10:00 AM",
+        closingTime: "10:00 PM",
+        daysOpen: "Monday - Sunday",
+        contact: "(212) 555-2106",
+        priceRange: "$$",
+        additional: "Check performance schedules and visitor information. Food service details should be confirmed separately."
     }
+
 };
 
 // ======================================
@@ -481,9 +558,7 @@ function openRestaurantModal(restaurant, image) {
     if (!modal) return;
 
 
-    // ===============================
-    // BASIC RESTAURANT INFORMATION
-    // ===============================
+    // BASIC INFORMATION
 
     document.getElementById("restaurantModalImage").src =
         image;
@@ -491,14 +566,11 @@ function openRestaurantModal(restaurant, image) {
     document.getElementById("restaurantModalImage").alt =
         restaurant.name || "Restaurant";
 
-
     document.getElementById("restaurantModalName").textContent =
         restaurant.name || "Unnamed Restaurant";
 
 
-    // ===============================
     // GRADE
-    // ===============================
 
     const grade =
         restaurant.grade || "N/A";
@@ -517,33 +589,25 @@ function openRestaurantModal(restaurant, image) {
         }`;
 
 
-    // ===============================
     // SCORE
-    // ===============================
 
     document.getElementById("restaurantModalScore").textContent =
         `Score ${restaurant.score ?? "N/A"}`;
 
 
-    // ===============================
     // CUISINE
-    // ===============================
 
     document.getElementById("restaurantModalCuisine").textContent =
-        restaurant.cuisine || "N/A";
+        (restaurant.cuisine || "N/A").trim();
 
 
-    // ===============================
     // LOCATION
-    // ===============================
 
     document.getElementById("restaurantModalLocation").textContent =
         restaurant.borough || "N/A";
 
 
-    // ===============================
-    // ADDRESS
-    // ===============================
+    // DATABASE ADDRESS
 
     const address = restaurant.address;
 
@@ -557,7 +621,7 @@ function openRestaurantModal(restaurant, image) {
             address.zipcode
         ]
             .filter(Boolean)
-            .join(", ");
+            .join(", ") || "N/A";
 
     } else if (address) {
 
@@ -566,195 +630,127 @@ function openRestaurantModal(restaurant, image) {
     }
 
 
-    // ===============================
-    // FEATURED RESTAURANT INFORMATION
-    // ===============================
+    // MATCH RESTAURANT DETAILS
+
+    const restaurantName =
+        (restaurant.name || "").trim();
 
     const info =
-        featuredInfo[restaurant.name];
+        featuredInfo[restaurantName];
 
 
-    if (info) {
+    // DESCRIPTION
 
-        document.getElementById(
-            "restaurantModalDescription"
-        ).textContent =
-            info.description || "N/A";
+    document.getElementById("restaurantModalDescription").textContent =
+        info?.description || "Restaurant information is not available.";
 
 
-        // Use featuredInfo address if available
-        document.getElementById(
-            "restaurantModalAddress"
-        ).textContent =
-            info.address || addressText;
+    // ADDRESS
+
+    document.getElementById("restaurantModalAddress").textContent =
+        info?.address || addressText;
 
 
-        document.getElementById(
-            "restaurantModalHours"
-        ).textContent =
-            `${info.openingTime} - ${info.closingTime}`;
+    // OPENING HOURS
+
+    const openingTime = info?.openingTime;
+    const closingTime = info?.closingTime;
+
+    document.getElementById("restaurantModalHours").textContent =
+        openingTime && closingTime
+            ? `${openingTime} - ${closingTime}`
+            : "Not available";
 
 
-        document.getElementById(
-            "restaurantModalDays"
-        ).textContent =
-            info.daysOpen || "N/A";
+    // DAYS OPEN
+
+    document.getElementById("restaurantModalDays").textContent =
+        info?.daysOpen || "Not available";
 
 
-        document.getElementById(
-            "restaurantModalContact"
-        ).textContent =
-            info.contact || "N/A";
+    // CONTACT
+
+    document.getElementById("restaurantModalContact").textContent =
+        info?.contact || "Not available";
 
 
-        document.getElementById(
-            "restaurantModalPrice"
-        ).textContent =
-            info.priceRange || "N/A";
+    // PRICE RANGE
+
+    document.getElementById("restaurantModalPrice").textContent =
+        info?.priceRange || "Not available";
 
 
-        document.getElementById(
-            "restaurantModalAdditional"
-        ).textContent =
-            info.additional || "N/A";
+    // ADDITIONAL INFORMATION
 
-    } else {
-
-        // Default values for restaurants
-        // that do not have featuredInfo
-
-        document.getElementById(
-            "restaurantModalDescription"
-        ).textContent =
-            "Restaurant information is not available.";
+    document.getElementById("restaurantModalAdditional").textContent =
+        info?.additional || "No additional information available.";
 
 
-        document.getElementById(
-            "restaurantModalAddress"
-        ).textContent =
-            addressText;
-
-
-        document.getElementById(
-            "restaurantModalHours"
-        ).textContent =
-            "Not available";
-
-
-        document.getElementById(
-            "restaurantModalDays"
-        ).textContent =
-            "Not available";
-
-
-        document.getElementById(
-            "restaurantModalContact"
-        ).textContent =
-            "Not available";
-
-
-        document.getElementById(
-            "restaurantModalPrice"
-        ).textContent =
-            "Not available";
-
-
-        document.getElementById(
-            "restaurantModalAdditional"
-        ).textContent =
-            "No additional information available.";
-
-    }
-
-
-    // ===============================
     // OPEN MODAL
-    // ===============================
 
     modal.classList.add("active");
-
-    modal.setAttribute(
-        "aria-hidden",
-        "false"
-    );
-
+    modal.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
+
+    // Load the selected restaurant's map.
+    if (typeof showRestaurantMap === "function") {
+        showRestaurantMap(restaurant);
+    }
 }
 
-// ===============================
-// CLOSE RESTAURANT MODAL
+
+ // ===============================
+// RESTAURANT MODAL CLOSE
 // ===============================
 
 function closeRestaurantModal() {
-
-    const modal =
-        document.getElementById("restaurantModal");
+    const modal = document.getElementById("restaurantModal");
 
     if (!modal) return;
 
-
     modal.classList.remove("active");
-
     modal.setAttribute("aria-hidden", "true");
-
     document.body.style.overflow = "";
 }
 
 
 // ===============================
-// MODAL EVENTS
+// MODAL CLOSE EVENTS
 // ===============================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
+    const closeButton = document.getElementById("restaurantModalClose");
+    const overlay = document.getElementById("restaurantModalOverlay");
 
-    const closeButton =
-        document.getElementById("restaurantModalClose");
+    if (closeButton) {
+        closeButton.addEventListener("click", closeRestaurantModal);
+    }
 
-    const overlay =
-        document.getElementById("restaurantModalOverlay");
+    if (overlay) {
+        overlay.addEventListener("click", closeRestaurantModal);
+    }
 
-
-    closeButton?.addEventListener(
-        "click",
-        closeRestaurantModal
-    );
-
-
-    overlay?.addEventListener(
-        "click",
-        closeRestaurantModal
-    );
-
-
-    document.addEventListener("keydown", (event) => {
-
+    document.addEventListener("keydown", function (event) {
         if (event.key === "Escape") {
             closeRestaurantModal();
         }
-
     });
-
 });
 
 
-// ===============================
+
+ // ===============================
 // BEST QUALITY
 // ===============================
 
 async function loadBestQuality() {
-
-    const container =
-        document.getElementById("bestQualityList");
+    const container = document.getElementById("bestQualityList");
 
     if (!container) return;
 
-
-    container.innerHTML =
-        "<p>Loading quality restaurants...</p>";
-
+    container.innerHTML = "<p>Loading quality restaurants...</p>";
 
     try {
-
         const response = await fetch(
             "/api/restaurants?grade=A&unique=true&sort=score&limit=6"
         );
@@ -763,45 +759,82 @@ async function loadBestQuality() {
             throw new Error("Failed to load quality restaurants.");
         }
 
-        const restaurants =
-            await response.json();
-
+        const restaurants = await response.json();
 
         container.innerHTML = "";
 
-
         if (restaurants.length === 0) {
-
-            container.innerHTML =
-                "<p>No quality restaurants found.</p>";
-
+            container.innerHTML = "<p>No quality restaurants found.</p>";
             return;
         }
 
-
-        const count =
-            document.getElementById("bestQualityCount");
+        const count = document.getElementById("bestQualityCount");
 
         if (count) {
-            count.textContent =
-                `${restaurants.length} restaurants`;
+            count.textContent = `${restaurants.length} restaurants`;
         }
 
-
-        displayRestaurants(
-            restaurants,
-            container
-        );
+        displayBestQualityRestaurants(restaurants, container);
 
     } catch (error) {
-
         console.error(error);
-
-        container.innerHTML =
-            "<p>Failed to load quality restaurants.</p>";
-
+        container.innerHTML = "<p>Failed to load quality restaurants.</p>";
     }
 }
+
+
+// ===============================
+// DISPLAY BEST QUALITY RESTAURANTS
+// ===============================
+
+function displayBestQualityRestaurants(restaurants, container) {
+    container.innerHTML = "";
+
+    restaurants.forEach((restaurant, index) => {
+        const card = document.createElement("div");
+        card.className = "restaurant-card";
+
+        const image = foodImages[index % foodImages.length];
+        const grade = restaurant.grade || "N/A";
+
+        const gradeClass = ["A", "B", "C"].includes(grade)
+            ? `grade-${grade}`
+            : "grade-other";
+
+        card.innerHTML = `
+            <div class="card-img-container">
+                <img
+                    src="${image}"
+                    alt="${restaurant.name || "Restaurant"}"
+                    class="card-img"
+                >
+                <div class="card-badges">
+                    <span class="badge badge-grade ${gradeClass}">
+                        Grade ${grade}
+                    </span>
+                    <span class="badge badge-score">
+                        Score ${restaurant.score ?? "N/A"}
+                    </span>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <h3>${restaurant.name || "Unnamed Restaurant"}</h3>
+                <p class="card-cuisine">${restaurant.cuisine || "N/A"}</p>
+                <p class="card-borough">${restaurant.borough || "N/A"}</p>
+            </div>
+        `;
+
+        card.style.cursor = "pointer";
+
+        card.addEventListener("click", () => {
+            openRestaurantModal(restaurant, image);
+        });
+
+        container.appendChild(card);
+    });
+}
+
 
 
 // ===============================

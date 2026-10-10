@@ -3,6 +3,8 @@ const { MongoClient } = require("mongodb");
 const path = require("path");
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 const PORT = 3000;
 
 // Demo Admin Account
@@ -12,8 +14,7 @@ const ADMIN_PASSWORD = "admin123";
 // Admin Login
 app.post("/api/admin/login", (req, res) => {
 
-    const { username, password } = req.body;
-
+    const { username, password } = req.body || {};
     if (
         username === ADMIN_USERNAME &&
         password === ADMIN_PASSWORD
