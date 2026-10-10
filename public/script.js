@@ -191,6 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Restaurants
     if (document.getElementById("restaurantList")) {
         setupFilters();
+        loadRestaurantFilterOptions();
         loadRestaurants();
     }
 
@@ -237,6 +238,66 @@ async function loadFeaturedRestaurants() {
         container.innerHTML =
             "<p>Failed to load restaurants.</p>";
 
+    }
+}
+
+
+ // ===============================
+// LOAD BOROUGH AND CUISINE OPTIONS
+// ===============================
+
+async function loadRestaurantFilterOptions() {
+    try {
+        const response = await fetch("/api/restaurant-filters");
+
+        if (!response.ok) {
+            throw new Error("Failed to load filter options.");
+        }
+
+        const filters = await response.json();
+
+        populateFilterOptions(
+            "boroughFilter",
+            filters.boroughs,
+            "All Boroughs"
+        );
+
+        populateFilterOptions(
+            "cuisine",
+            filters.cuisines,
+            "All Cuisines"
+        );
+
+    } catch (error) {
+        console.error("Error loading filter options:", error);
+    }
+}
+
+function populateFilterOptions(elementId, options, defaultText) {
+    const dropdown = document.getElementById(elementId);
+
+    if (!dropdown) return;
+
+    const previousValue = dropdown.value;
+
+    // Keep the default option and remove old dynamic options.
+    dropdown.replaceChildren();
+
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = defaultText;
+    dropdown.appendChild(defaultOption);
+
+    options.forEach(value => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = value;
+        dropdown.appendChild(option);
+    });
+
+    // Preserve the selected filter if it still exists.
+    if (options.includes(previousValue)) {
+        dropdown.value = previousValue;
     }
 }
 

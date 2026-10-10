@@ -6,46 +6,32 @@
 
     <title>Dine & Seek | Admin Dashboard</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"
+    >
 </head>
 
 <body>
 
-    <!-- Navigation -->
-    <nav class="navbar">
+    <!-- Admin Navigation -->
+    <nav class="navbar admin-navbar">
         <div class="nav-container">
 
-            <a href="index.html" class="logo">
+            <a href="admin.html" class="logo">
                 Dine & Seek
             </a>
 
-            <div class="nav-links">
-
-                <a href="index.html">
-                    Home
-                </a>
-
-                <a href="about.html">
-                    About
-                </a>
-
-                <a href="restaurants.html">
-                    Restaurants
-                </a>
-
-                <a href="best-quality.html">
-                    Best Quality
-                </a>
-
-                <a href="admin.html" class="active">
-                    Admin
-                </a>
-
-            </div>
+            <button
+                type="button"
+                id="adminLogout"
+                class="reset-button"
+            >
+                Logout
+            </button>
 
         </div>
     </nav>
@@ -57,10 +43,8 @@
         <div class="admin-container">
 
             <!-- Dashboard Header -->
-            <div class="admin-header">
-
+            <header class="admin-header">
                 <div>
-
                     <p class="section-label">
                         ADMINISTRATION
                     </p>
@@ -70,168 +54,176 @@
                     </h1>
 
                     <p>
-                        Manage the restaurants stored in the
+                        Manage restaurant records in the
                         Dine & Seek database.
                     </p>
-
                 </div>
+            </header>
 
+
+            <!-- CRUD Navigation -->
+            <nav class="admin-tabs" aria-label="Restaurant management">
 
                 <button
-                    id="adminLogout"
-                    class="reset-button"
+                    type="button"
+                    class="admin-tab"
+                    data-tab="create"
+                    aria-controls="createSection"
+                    aria-selected="false"
                 >
-                    Logout
+                    <span class="tab-icon">+</span>
+                    Create
                 </button>
 
-            </div>
+                <button
+                    type="button"
+                    class="admin-tab active"
+                    data-tab="read"
+                    aria-controls="readSection"
+                    aria-selected="true"
+                >
+                    <span class="tab-icon">☷</span>
+                    Read
+                </button>
+
+                <button
+                    type="button"
+                    class="admin-tab"
+                    data-tab="update"
+                    aria-controls="updateSection"
+                    aria-selected="false"
+                >
+                    <span class="tab-icon">✎</span>
+                    Update
+                </button>
+
+                <button
+                    type="button"
+                    class="admin-tab"
+                    data-tab="delete"
+                    aria-controls="deleteSection"
+                    aria-selected="false"
+                >
+                    <span class="tab-icon">×</span>
+                    Delete
+                </button>
+
+            </nav>
 
 
-            <!-- Add Restaurant -->
-            <section class="admin-card">
+            <!-- CREATE SECTION -->
+            <section
+                id="createSection"
+                class="admin-section admin-card"
+                hidden
+            >
 
                 <div class="admin-card-header">
-
                     <div>
+                        <p class="section-label">CREATE</p>
+                        <h2>Add Restaurant</h2>
 
-                        <p class="section-label">
-                            CREATE
+                        <p>
+                            Enter the details of the new restaurant.
                         </p>
-
-                        <h2>
-                            Add Restaurant
-                        </h2>
-
                     </div>
-
                 </div>
 
 
-                <form id="restaurantForm">
+                <form id="createRestaurantForm">
 
                     <div class="admin-form-grid">
 
-                        <!-- Restaurant Name -->
                         <div class="filter-group">
-
-                            <label for="restaurantName">
+                            <label for="createName">
                                 Restaurant Name
                             </label>
 
                             <input
                                 type="text"
-                                id="restaurantName"
+                                id="createName"
                                 name="name"
                                 placeholder="Enter restaurant name"
                                 required
                             >
-
                         </div>
 
 
-                        <!-- Borough -->
                         <div class="filter-group">
-
-                            <label for="restaurantBorough">
+                            <label for="createBorough">
                                 Borough
                             </label>
 
                             <input
                                 type="text"
-                                id="restaurantBorough"
+                                id="createBorough"
                                 name="borough"
                                 placeholder="Enter borough"
                                 required
                             >
-
                         </div>
 
 
-                        <!-- Cuisine -->
                         <div class="filter-group">
-
-                            <label for="restaurantCuisine">
+                            <label for="createCuisine">
                                 Cuisine
                             </label>
 
                             <input
                                 type="text"
-                                id="restaurantCuisine"
+                                id="createCuisine"
                                 name="cuisine"
                                 placeholder="Enter cuisine"
                                 required
                             >
-
                         </div>
 
 
-                        <!-- Grade -->
                         <div class="filter-group">
-
-                            <label for="restaurantGrade">
+                            <label for="createGrade">
                                 Grade
                             </label>
 
                             <select
-                                id="restaurantGrade"
+                                id="createGrade"
                                 name="grade"
                                 required
                             >
-
-                                <option value="">
-                                    Select Grade
-                                </option>
-
-                                <option value="A">
-                                    A
-                                </option>
-
-                                <option value="B">
-                                    B
-                                </option>
-
-                                <option value="C">
-                                    C
-                                </option>
-
+                                <option value="">Select Grade</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
                             </select>
-
                         </div>
 
 
-                        <!-- Score -->
                         <div class="filter-group">
-
-                            <label for="restaurantScore">
+                            <label for="createScore">
                                 Score
                             </label>
 
                             <input
                                 type="number"
-                                id="restaurantScore"
+                                id="createScore"
                                 name="score"
                                 min="0"
                                 placeholder="Enter score"
                                 required
                             >
-
                         </div>
 
 
-                        <!-- Restaurant ID -->
                         <div class="filter-group">
-
-                            <label for="restaurantId">
+                            <label for="createRestaurantId">
                                 Restaurant ID
                             </label>
 
                             <input
                                 type="text"
-                                id="restaurantId"
+                                id="createRestaurantId"
                                 name="restaurant_id"
-                                placeholder="Enter restaurant ID"
+                                placeholder="Optional restaurant ID"
                             >
-
                         </div>
 
                     </div>
@@ -247,46 +239,46 @@
                         </button>
 
                         <button
-                            type="button"
-                            id="cancelEdit"
+                            type="reset"
                             class="reset-button"
-                            style="display: none;"
                         >
-                            Cancel Edit
+                            Clear Form
                         </button>
 
                     </div>
 
                 </form>
 
-
                 <p
-                    id="adminMessage"
+                    id="createMessage"
                     class="admin-message"
-                    style="display: none;"
+                    role="status"
+                    aria-live="polite"
+                    hidden
                 ></p>
 
             </section>
 
 
-            <!-- Restaurant Records -->
-            <section class="admin-card">
+            <!-- READ SECTION -->
+            <section
+                id="readSection"
+                class="admin-section admin-card"
+            >
 
                 <div class="admin-card-header">
 
                     <div>
+                        <p class="section-label">READ</p>
+                        <h2>Restaurant Records</h2>
 
-                        <p class="section-label">
-                            DATABASE
+                        <p>
+                            View and search restaurants stored in MongoDB.
                         </p>
-
-                        <h2>
-                            Restaurant Records
-                        </h2>
-
                     </div>
 
                     <button
+                        type="button"
                         id="refreshRestaurants"
                         class="reset-button"
                     >
@@ -296,67 +288,39 @@
                 </div>
 
 
-                <!-- Admin Search -->
                 <div class="admin-search">
-
                     <input
-                        type="text"
-                        id="adminSearch"
-                        placeholder="Search restaurant records..."
+                        type="search"
+                        id="readSearch"
+                        placeholder="Search by name, borough, or cuisine..."
+                        aria-label="Search restaurant records"
                     >
-
                 </div>
 
 
-                <!-- Table -->
                 <div class="admin-table-container">
 
                     <table class="admin-table">
 
                         <thead>
-
                             <tr>
-
-                                <th>
-                                    Restaurant
-                                </th>
-
-                                <th>
-                                    Borough
-                                </th>
-
-                                <th>
-                                    Cuisine
-                                </th>
-
-                                <th>
-                                    Grade
-                                </th>
-
-                                <th>
-                                    Score
-                                </th>
-
-                                <th>
-                                    Actions
-                                </th>
-
+                                <th>Restaurant</th>
+                                <th>Borough</th>
+                                <th>Cuisine</th>
+                                <th>Grade</th>
+                                <th>Score</th>
                             </tr>
-
                         </thead>
 
-
-                        <tbody id="adminRestaurantList">
+                        <tbody id="readRestaurantList">
 
                             <tr>
-
                                 <td
-                                    colspan="6"
+                                    colspan="5"
                                     class="loading-table"
                                 >
                                     Loading restaurants...
                                 </td>
-
                             </tr>
 
                         </tbody>
@@ -366,23 +330,324 @@
                 </div>
 
 
-                <!-- No Records -->
                 <div
-                    id="adminNoResults"
+                    id="readNoResults"
                     class="no-results"
-                    style="display: none;"
+                    hidden
                 >
-
-                    <h3>
-                        No restaurants found
-                    </h3>
+                    <h3>No restaurants found</h3>
 
                     <p>
-                        There are currently no restaurant
-                        records to display.
+                        No records match your search.
                     </p>
+                </div>
+
+
+                <p
+                    id="readMessage"
+                    class="admin-message"
+                    role="status"
+                    aria-live="polite"
+                    hidden
+                ></p>
+
+            </section>
+
+
+            <!-- UPDATE SECTION -->
+            <section
+                id="updateSection"
+                class="admin-section admin-card"
+                hidden
+            >
+
+                <div class="admin-card-header">
+                    <div>
+                        <p class="section-label">UPDATE</p>
+                        <h2>Update Restaurant</h2>
+
+                        <p>
+                            Select a restaurant to edit its information.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="admin-search">
+                    <input
+                        type="search"
+                        id="updateSearch"
+                        placeholder="Search restaurants to update..."
+                        aria-label="Search restaurants to update"
+                    >
+                </div>
+
+
+                <div class="admin-table-container">
+
+                    <table class="admin-table">
+
+                        <thead>
+                            <tr>
+                                <th>Restaurant</th>
+                                <th>Borough</th>
+                                <th>Cuisine</th>
+                                <th>Grade</th>
+                                <th>Score</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="updateRestaurantList">
+
+                            <tr>
+                                <td
+                                    colspan="6"
+                                    class="loading-table"
+                                >
+                                    Loading restaurants...
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
 
                 </div>
+
+
+                <!-- Edit Form -->
+                <div
+                    id="updateFormContainer"
+                    class="admin-edit-form"
+                    hidden
+                >
+
+                    <div class="admin-card-header">
+                        <div>
+                            <p class="section-label">EDIT RECORD</p>
+                            <h3>Edit Restaurant Details</h3>
+                        </div>
+                    </div>
+
+
+                    <form id="updateRestaurantForm">
+
+                        <input
+                            type="hidden"
+                            id="updateDocumentId"
+                        >
+
+
+                        <div class="admin-form-grid">
+
+                            <div class="filter-group">
+                                <label for="updateName">
+                                    Restaurant Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="updateName"
+                                    name="name"
+                                    required
+                                >
+                            </div>
+
+
+                            <div class="filter-group">
+                                <label for="updateBorough">
+                                    Borough
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="updateBorough"
+                                    name="borough"
+                                    required
+                                >
+                            </div>
+
+
+                            <div class="filter-group">
+                                <label for="updateCuisine">
+                                    Cuisine
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="updateCuisine"
+                                    name="cuisine"
+                                    required
+                                >
+                            </div>
+
+
+                            <div class="filter-group">
+                                <label for="updateGrade">
+                                    Grade
+                                </label>
+
+                                <select
+                                    id="updateGrade"
+                                    name="grade"
+                                    required
+                                >
+                                    <option value="">Select Grade</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                </select>
+                            </div>
+
+
+                            <div class="filter-group">
+                                <label for="updateScore">
+                                    Score
+                                </label>
+
+                                <input
+                                    type="number"
+                                    id="updateScore"
+                                    name="score"
+                                    min="0"
+                                    required
+                                >
+                            </div>
+
+
+                            <div class="filter-group">
+                                <label for="updateRestaurantId">
+                                    Restaurant ID
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="updateRestaurantId"
+                                    name="restaurant_id"
+                                >
+                            </div>
+
+                        </div>
+
+
+                        <div class="admin-form-actions">
+
+                            <button
+                                type="submit"
+                                class="hero-button"
+                            >
+                                Save Changes
+                            </button>
+
+                            <button
+                                type="button"
+                                id="cancelUpdate"
+                                class="reset-button"
+                            >
+                                Cancel
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+
+                <p
+                    id="updateMessage"
+                    class="admin-message"
+                    role="status"
+                    aria-live="polite"
+                    hidden
+                ></p>
+
+            </section>
+
+
+            <!-- DELETE SECTION -->
+            <section
+                id="deleteSection"
+                class="admin-section admin-card"
+                hidden
+            >
+
+                <div class="admin-card-header">
+                    <div>
+                        <p class="section-label">DELETE</p>
+                        <h2>Delete Restaurant</h2>
+
+                        <p>
+                            Select a restaurant record to remove it.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="admin-search">
+                    <input
+                        type="search"
+                        id="deleteSearch"
+                        placeholder="Search restaurants to delete..."
+                        aria-label="Search restaurants to delete"
+                    >
+                </div>
+
+
+                <div class="admin-table-container">
+
+                    <table class="admin-table">
+
+                        <thead>
+                            <tr>
+                                <th>Restaurant</th>
+                                <th>Borough</th>
+                                <th>Cuisine</th>
+                                <th>Grade</th>
+                                <th>Score</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="deleteRestaurantList">
+
+                            <tr>
+                                <td
+                                    colspan="6"
+                                    class="loading-table"
+                                >
+                                    Loading restaurants...
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div
+                    id="deleteNoResults"
+                    class="no-results"
+                    hidden
+                >
+                    <h3>No restaurants found</h3>
+
+                    <p>
+                        No records match your search.
+                    </p>
+                </div>
+
+
+                <p
+                    id="deleteMessage"
+                    class="admin-message"
+                    role="status"
+                    aria-live="polite"
+                    hidden
+                ></p>
 
             </section>
 
@@ -393,58 +658,16 @@
 
     <!-- Footer -->
     <footer class="footer">
-
-        <div class="footer-container">
-
-            <div>
-
-                <h3>
-                    Dine & Seek
-                </h3>
-
-                <p>
-                    Seek it. Find it. Dine it.
-                    Your guide to discovering restaurants.
-                </p>
-
-            </div>
-
-
-            <div class="footer-links">
-
-                <a href="index.html">
-                    Home
-                </a>
-
-                <a href="about.html">
-                    About
-                </a>
-
-                <a href="restaurants.html">
-                    Restaurants
-                </a>
-
-                <a href="best-quality.html">
-                    Best Quality
-                </a>
-
-            </div>
-
-        </div>
-
-
         <div class="footer-bottom">
-
             <p>
-                © 2026 Dine & Seek. All rights reserved.
+                © 2026 Dine & Seek. Admin Dashboard.
             </p>
-
         </div>
-
     </footer>
 
 
-    <script src="script.js"></script>
+    <!-- Admin JavaScript -->
+    <script src="admin.js"></script>
 
 </body>
 </html>

@@ -1,88 +1,391 @@
 const express = require("express");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const path = require("path");
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 const PORT = 3000;
 
-// Demo Admin Account
-const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "admin123";
-
-// Admin Login
-app.post("/api/admin/login", (req, res) => {
-
-    const { username, password } = req.body || {};
-    if (
-        username === ADMIN_USERNAME &&
-        password === ADMIN_PASSWORD
-    ) {
-        return res.json({
-            success: true
-        });
-    }
-
-    res.status(401).json({
-        error: "Invalid username or password."
-    });
-});
-
+// Middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Public folder
 const publicDir = path.join(__dirname, "public");
 app.use(express.static(publicDir));
 
-// Local MongoDB Connection
+// MongoDB connection
 const uri = "mongodb://127.0.0.1:27017";
-
 const client = new MongoClient(uri);
+
 let db;
 
-// Connect to Local MongoDB
-async function connectDB() {
-    try {
-        await client.connect();
+const restaurantsCollection = () => db.collection("restaurants");
 
-        db = client.db("restaurantDB");
+// Demo admin account
+const ADMIN_USERNAME = "admin";
+const ADMIN_PASSWORD = "admin123";
 
-        console.log("Connected successfully to local MongoDB!");
-        console.log("Database: restaurantDB");
-        console.log("Collection: restaurants");
+// ======================================
+// HELPER FUNCTIONS
+// ======================================
 
-    } catch (err) {
-        console.error("MongoDB Connection Error:", err.message);
-        process.exit(1);
-    }
-}
-
-// Makes user text safe to use inside a regex
 function escapeRegex(text) {
     return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-// Admin Login
-app.post("/api/admin/login", (req, res) => {
+function getLatestInspection(restaurant) {
+    if (!restaurant.grades || restaurant.grades.length === 0) {
+        return {
+            grade: "",
+            score: ""
+        };
+    }
 
-    const { username, password } = req.body;
+    const grades = [...restaurant.grades];
+
+    grades.sort((a, b) => {
+        return new Date(b.date || 0) - new Date(a.date || 0);
+    });
+
+    return {
+        grade: grades[0].grade || "",
+        score: grades[0].score ?? ""
+    };
+}
+
+function formatAdminRestaurant(restaurant) {
+    const latest = getLatestInspection(restaurant);
+
+    return {
+        _id: restaurant._id.toString(),
+        name: restaurant.name || "",
+        borough: restaurant.borough || "",
+        cuisine: (restaurant.cuisine || "").trim(),
+        grade: latest.grade,
+        score: latest.score,
+        restaurant_id: restaurant.restaurant_id ?? ""
+    };
+}
+
+function isValidObjectId(id) {
+    return ObjectId.isValid(id) &&
+        new ObjectId(id).toString() === id;
+}
+
+function validateRestaurant(data) {
+    const name = typeof data.name === "string"
+        ? data.name.trim()
+        : "";
+
+    const borough = typeof data.borough === "string"
+        ? data.borough.trim()
+        : "";
+
+    const cuisine = typeof data.cuisine === "string"
+        ? data.cuisine.trim()
+        : "";
+
+    const grade = typeof data.grade === "string"
+        ? data.grade.trim().toUpperCase()
+        : "";
+
+    const score = Number(data.score);
+
+    if (!name || !borough || !cuisine || !grade) {
+        return {
+            error: "Please complete the restaurant name, borough, cuisine, and grade."
+        };
+    }
+
+    if (!Number.isFinite(score) || score < 0) {
+        return {
+            error: "Please enter a valid score of 0 or higher."
+        };
+    }
+
+    return {
+        restaurant: {
+            name,
+            borough,
+            cuisine,
+            grade,
+            score,
+            restaurant_id:
+                typeof data.restaurant_id === "string"
+                    ? data.restaurant_id.trim()
+                    : ""
+        }
+    };
+}
+
+// ======================================
+// ADMIN LOGIN
+// ======================================
+
+app.post("/api/admin/login", (req, res) => {
+    const { username, password } = req.body || {};
 
     if (
         username === ADMIN_USERNAME &&
         password === ADMIN_PASSWORD
     ) {
         return res.json({
-            success: true
+            success: true,
+            message: "Admin login successful"
         });
     }
 
-    res.status(401).json({
+    return res.status(401).json({
         error: "Invalid username or password."
     });
 });
 
-// Get restaurants
+// ======================================
+// ADMIN: READ ALL RESTAURANTS
+// ======================================
+
+app.get("/api/admin/restaurants", async (req, res) => {
+    try {
+        const restaurants = await restaurantsCollection()
+            .find({})
+            .toArray();
+
+        restaurants.sort((a, b) =>
+            (a.name || "").localeCompare(b.name || "")
+        );
+
+        res.json(restaurants.map(formatAdminRestaurant));
+    } catch (error) {
+        console.error("Admin Read Error:", error);
+
+        res.status(500).json({
+            error: "Unable to load restaurants."
+        });
+    }
+});
+
+// ======================================
+// ADMIN: CREATE RESTAURANT
+// ======================================
+
+app.post("/api/admin/restaurants", async (req, res) => {
+    try {
+        const result = validateRestaurant(req.body || {});
+
+        if (result.error) {
+            return res.status(400).json({
+                error: result.error
+            });
+        }
+
+        const restaurant = result.restaurant;
+
+        const newRestaurant = {
+            name: restaurant.name,
+            borough: restaurant.borough,
+            cuisine: restaurant.cuisine,
+            grades: [
+                {
+                    grade: restaurant.grade,
+                    score: restaurant.score,
+                    date: new Date()
+                }
+            ]
+        };
+
+        // Include restaurant_id only when provided.
+        if (restaurant.restaurant_id) {
+            newRestaurant.restaurant_id = restaurant.restaurant_id;
+        }
+
+        const insertResult = await restaurantsCollection()
+            .insertOne(newRestaurant);
+
+        const created = await restaurantsCollection().findOne({
+            _id: insertResult.insertedId
+        });
+
+        res.status(201).json({
+            message: "Restaurant added successfully.",
+            restaurant: formatAdminRestaurant(created)
+        });
+    } catch (error) {
+        console.error("Admin Create Error:", error);
+
+        res.status(500).json({
+            error: "Unable to add restaurant."
+        });
+    }
+});
+
+// ======================================
+// ADMIN: UPDATE RESTAURANT
+// ======================================
+
+app.put("/api/admin/restaurants/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({
+                error: "Invalid restaurant ID."
+            });
+        }
+
+        const result = validateRestaurant(req.body || {});
+
+        if (result.error) {
+            return res.status(400).json({
+                error: result.error
+            });
+        }
+
+        const restaurant = result.restaurant;
+        const objectId = new ObjectId(id);
+
+        const existing = await restaurantsCollection().findOne({
+            _id: objectId
+        });
+
+        if (!existing) {
+            return res.status(404).json({
+                error: "Restaurant not found."
+            });
+        }
+
+        const updateFields = {
+            name: restaurant.name,
+            borough: restaurant.borough,
+            cuisine: restaurant.cuisine
+        };
+
+        if (restaurant.restaurant_id) {
+            updateFields.restaurant_id = restaurant.restaurant_id;
+        } else {
+            updateFields.restaurant_id = "";
+        }
+
+        // Preserve inspection history.
+        // Add a new inspection only if grade or score changed.
+        const latest = getLatestInspection(existing);
+
+        const gradeChanged =
+            latest.grade !== restaurant.grade ||
+            Number(latest.score) !== restaurant.score;
+
+        const updateOperation = {
+            $set: updateFields
+        };
+
+        if (gradeChanged) {
+            updateOperation.$push = {
+                grades: {
+                    grade: restaurant.grade,
+                    score: restaurant.score,
+                    date: new Date()
+                }
+            };
+        }
+
+        await restaurantsCollection().updateOne(
+            { _id: objectId },
+            updateOperation
+        );
+
+        const updated = await restaurantsCollection().findOne({
+            _id: objectId
+        });
+
+        res.json({
+            message: "Restaurant updated successfully.",
+            restaurant: formatAdminRestaurant(updated)
+        });
+    } catch (error) {
+        console.error("Admin Update Error:", error);
+
+        res.status(500).json({
+            error: "Unable to update restaurant."
+        });
+    }
+});
+
+// ======================================
+// ADMIN: DELETE RESTAURANT
+// ======================================
+
+app.delete("/api/admin/restaurants/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!isValidObjectId(id)) {
+            return res.status(400).json({
+                error: "Invalid restaurant ID."
+            });
+        }
+
+        const result = await restaurantsCollection().deleteOne({
+            _id: new ObjectId(id)
+        });
+
+        if (result.deletedCount === 0) {
+            return res.status(404).json({
+                error: "Restaurant not found."
+            });
+        }
+
+        res.json({
+            message: "Restaurant deleted successfully."
+        });
+    } catch (error) {
+        console.error("Admin Delete Error:", error);
+
+        res.status(500).json({
+            error: "Unable to delete restaurant."
+        });
+    }
+});
+
+// ======================================
+// PUBLIC: GET RESTAURANT FILTER OPTIONS
+// ======================================
+
+app.get("/api/restaurant-filters", async (req, res) => {
+    try {
+        const collection = restaurantsCollection();
+
+        const [boroughValues, cuisineValues] = await Promise.all([
+            collection.distinct("borough"),
+            collection.distinct("cuisine")
+        ]);
+
+        // Remove empty values, trim spaces, remove duplicates,
+        // and sort alphabetically.
+        function cleanOptions(values) {
+            return [...new Set(
+                values
+                    .filter(value => typeof value === "string")
+                    .map(value => value.trim())
+                    .filter(Boolean)
+            )].sort((a, b) => a.localeCompare(b));
+        }
+
+        res.json({
+            boroughs: cleanOptions(boroughValues),
+            cuisines: cleanOptions(cuisineValues)
+        });
+    } catch (error) {
+        console.error("Restaurant Filter Options Error:", error);
+
+        res.status(500).json({
+            error: "Unable to load restaurant filter options."
+        });
+    }
+});
+
+// ======================================
+// PUBLIC: GET RESTAURANTS WITH FILTERS
+// ======================================
+
 app.get("/api/restaurants", async (req, res) => {
     try {
         const {
@@ -99,7 +402,6 @@ app.get("/api/restaurants", async (req, res) => {
         const pipeline = [];
         const matchStage = {};
 
-        // Filters on the restaurant itself
         if (name) {
             matchStage.name = {
                 $regex: escapeRegex(name.trim()),
@@ -108,22 +410,27 @@ app.get("/api/restaurants", async (req, res) => {
         }
 
         if (borough) {
-            matchStage.borough = borough;
+            matchStage.borough = {
+                $regex: "^" + escapeRegex(borough.trim()) + "$",
+                $options: "i"
+            };
         }
 
         if (cuisine) {
-            matchStage.cuisine = cuisine;
+            matchStage.cuisine = {
+                $regex: "^" + escapeRegex(cuisine.trim()) + "$",
+                $options: "i"
+            };
         }
 
         if (Object.keys(matchStage).length > 0) {
             pipeline.push({ $match: matchStage });
         }
 
-        // One row per inspection, newest first
+        // Get the latest inspection for each restaurant.
         pipeline.push({ $unwind: "$grades" });
         pipeline.push({ $sort: { "grades.date": -1 } });
 
-        // Keep only the latest inspection of each restaurant
         pipeline.push({
             $group: {
                 _id: "$_id",
@@ -137,7 +444,6 @@ app.get("/api/restaurants", async (req, res) => {
             }
         });
 
-        // Grade and score filters now use the latest inspection only
         const latestMatch = {};
         const scoreRule = {};
 
@@ -145,8 +451,12 @@ app.get("/api/restaurants", async (req, res) => {
             latestMatch.grade = grade;
         }
 
-        if (maxScore) {
-            scoreRule.$lte = Number(maxScore);
+        if (maxScore !== undefined && maxScore !== "") {
+            const numericMaxScore = Number(maxScore);
+
+            if (Number.isFinite(numericMaxScore)) {
+                scoreRule.$lte = numericMaxScore;
+            }
         }
 
         if (sort === "score") {
@@ -161,15 +471,12 @@ app.get("/api/restaurants", async (req, res) => {
             pipeline.push({ $match: latestMatch });
         }
 
-        // Sorting
-        const sortStage =
-            sort === "score"
-                ? { score: 1, name: 1 }
-                : { name: 1 };
+        const sortStage = sort === "score"
+            ? { score: 1, name: 1 }
+            : { name: 1 };
 
         pipeline.push({ $sort: sortStage });
 
-        // Optional: one result per restaurant name
         if (unique === "true") {
             pipeline.push({
                 $group: {
@@ -177,65 +484,59 @@ app.get("/api/restaurants", async (req, res) => {
                     doc: { $first: "$$ROOT" }
                 }
             });
-            pipeline.push({ $replaceRoot: { newRoot: "$doc" } });
+
+            pipeline.push({
+                $replaceRoot: { newRoot: "$doc" }
+            });
+
             pipeline.push({ $sort: sortStage });
         }
 
-        // Optional: limit the number of results
-        if (Number(limit) > 0) {
-            pipeline.push({ $limit: Number(limit) });
+        const numericLimit = Number(limit);
+
+        if (Number.isInteger(numericLimit) && numericLimit > 0) {
+            pipeline.push({ $limit: numericLimit });
         }
 
-        pipeline.push({ $project: { _id: 0 } });
+        pipeline.push({
+            $project: { _id: 0 }
+        });
 
-        const restaurants = await db
-            .collection("restaurants")
+        const restaurants = await restaurantsCollection()
             .aggregate(pipeline, { allowDiskUse: true })
             .toArray();
 
         res.json(restaurants);
-
     } catch (error) {
-        console.error("API Error:", error);
+        console.error("Public Restaurant API Error:", error);
 
         res.status(500).json({
-            error: "Unable to load restaurant data from MongoDB"
+            error: "Unable to load restaurant data from MongoDB."
         });
     }
 });
 
 // ======================================
-// ADMIN LOGIN
+// CONNECT TO MONGODB AND START SERVER
 // ======================================
 
-app.post("/api/admin/login", (req, res) => {
+async function connectDB() {
+    try {
+        await client.connect();
 
-    const { username, password } = req.body;
+        db = client.db("restaurantDB");
 
-    // Demo account
-    if (
-        username === "admin" &&
-        password === "admin123"
-    ) {
+        console.log("Connected successfully to local MongoDB!");
+        console.log("Database: restaurantDB");
+        console.log("Collection: restaurants");
 
-        return res.json({
-            success: true,
-            message: "Admin login successful"
+        app.listen(PORT, () => {
+            console.log(`🚀 Server running at http://localhost:${PORT}`);
         });
-
+    } catch (error) {
+        console.error("MongoDB Connection Error:", error.message);
+        process.exit(1);
     }
+}
 
-    res.status(401).json({
-        error: "Invalid username or password."
-    });
-
-});
-
-// Connect to MongoDB first, then start the server
-connectDB().then(() => {
-    app.listen(PORT, () => {
-        console.log(
-            `🚀 Server running at http://localhost:${PORT}`
-        );
-    });
-});
+connectDB();
