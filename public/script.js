@@ -21,70 +21,70 @@ const featuredInfo = {
     // FEATURED RESTAURANTS
     // =====================================
 
-    "Locanda Vini E Olii": {
-        description: "A cozy Italian restaurant offering traditional Italian dishes in a warm and welcoming setting.",
-        address: "Biddrina Gelato, 129, Gates Avenue, Brooklyn, Kings County, New York, 11238, United States",
-        openingTime: "11:30 AM",
+    "(Lewis Drug Store) Locanda Vini E Olii": {
+        description: "An Italian restaurant specializing in traditional Tuscan cuisine, freshly made pasta, antipasti, and Italian wines.",
+        address: "129 Gates Avenue, Brooklyn, NY 11238",
+        openingTime: "5:00 PM",
         closingTime: "10:00 PM",
         daysOpen: "Monday - Sunday",
-        contact: "(718) 456-1234",
-        priceRange: "$$$",
-        additional: "Dine-in and takeout available."
+        contact: "(718) 622-9202",
+        priceRange: "$40 - $100",
+        additional: "Opened in 2001 in a former neighborhood pharmacy dating back to 1896. The restaurant preserves much of the original woodwork and cabinetry. Owner and chef Michele Baldacci specializes in traditional Tuscan cuisine."
     },
 
     "1 East 66Th Street Kitchen": {
-        description: "A stylish restaurant offering a variety of dishes in an elegant dining environment.",
-        address: "1 East 66th Street, New York, New York",
-        openingTime: "11:00 AM",
-        closingTime: "10:00 PM",
-        daysOpen: "Monday - Sunday",
-        contact: "(212) 555-1234",
-        priceRange: "$$$",
-        additional: "Dine-in and reservations available."
+        description: "An American-style dining facility located within a residential cooperative building on Manhattan's Upper East Side.",
+        address: "1 East 66th Street, New York, NY 10065",
+        openingTime: "Not available",
+        closingTime: "Not available",
+        daysOpen: "Not available",
+        contact: "Not available",
+        priceRange: "Not available",
+        additional: "Located in a residential building on the Upper East Side of Manhattan. Public information about its operating hours, menu, pricing, and contact details could not be confirmed. Contact the building or establishment directly for visitor information."
     },
 
     "101 Deli": {
-        description: "A casual deli serving convenient meals, sandwiches, and other everyday favorites.",
-        address: "101 Example Street, New York, New York",
-        openingTime: "7:00 AM",
-        closingTime: "9:00 PM",
-        daysOpen: "Monday - Sunday",
-        contact: "(212) 555-2345",
-        priceRange: "$$",
-        additional: "Takeout and quick dining available."
-    },
-
-    "101 Restaurant And Bar": {
-        description: "A casual restaurant and bar offering a relaxed atmosphere and a selection of food and drinks.",
-        address: "101 Example Avenue, New York, New York",
-        openingTime: "11:00 AM",
-        closingTime: "11:00 PM",
-        daysOpen: "Monday - Sunday",
-        contact: "(212) 555-3456",
-        priceRange: "$$",
-        additional: "Dine-in and group dining available."
-    },
-
-    "1020 Bar": {
-        description: "A casual neighborhood spot offering food, drinks, and a relaxed dining experience.",
-        address: "1020 Example Street, New York, New York",
-        openingTime: "12:00 PM",
-        closingTime: "11:00 PM",
-        daysOpen: "Monday - Sunday",
-        contact: "(212) 555-4567",
-        priceRange: "$$",
-        additional: "Dine-in and takeout available."
-    },
-
-    "104-01 Foster Avenue Coffee Shop": {
-        description: "A neighborhood coffee shop serving coffee, light meals, and refreshments in a casual setting.",
-        address: "104-01 Foster Avenue, Brooklyn, New York",
+        description: "A neighborhood deli offering sandwiches, breakfast items, freshly baked bread, convenience foods, and pickup or delivery options.",
+        address: "100-16 Rockaway Beach Boulevard, Rockaway Park, Queens, NY 11694",
         openingTime: "6:00 AM",
         closingTime: "8:00 PM",
         daysOpen: "Monday - Sunday",
-        contact: "(718) 555-5678",
-        priceRange: "$",
-        additional: "Coffee, light meals, dine-in, and takeout available."
+        contact: "(718) 634-1121",
+        priceRange: "$10 - $20",
+        additional: "Known for generously filled sandwiches, freshly baked bread, and breakfast options. The Rockaway Times reported that the business announced its closure on October 12, 2025. Its current operating status should be verified before visiting."
+    },
+
+    "101 Restaurant And Bar": {
+        description: "A restaurant serving Southern-inspired American cuisine, including smoked pork, chicken wings, salads, and classic side dishes.",
+        address: "1 West Street, Pittsfield, MA 01201",
+        openingTime: "Breakfast: 6:30 AM - 10:30 AM daily\nDinner: 5:00 PM - 9:00 PM Monday - Thursday\nDinner: 5:00 PM - 10:00 PM Friday - Saturday",
+        closingTime: "",
+        daysOpen: "Breakfast daily; dinner Monday - Saturday",
+        contact: "(413) 553-2251",
+        priceRange: "$10 - $30",
+        additional: "Offers breakfast and dinner with a menu focused on Southern-inspired American dishes. Confirm current operating hours and menu availability before visiting."
+    },
+
+    "1020 Bar": {
+        description: "A neighborhood bar known for its casual atmosphere, pool table, darts, and popularity among Columbia University students and local residents.",
+        address: "1020 Amsterdam Avenue, New York, NY 10025",
+        openingTime: "4:00 PM",
+        closingTime: "Not available",
+        daysOpen: "Daily",
+        contact: "(212) 531-3468",
+        priceRange: "$10 - $20",
+        additional: "Features a dimly lit barroom, budget-friendly drinks, darts, and pool. Popular with college students and neighborhood residents. Confirm closing time directly with the establishment."
+    },
+
+    "104-01 Foster Avenue Coffee Shop": {
+        description: "A coffee shop or casual dining establishment listed in the restaurant dataset. Specific menu items and services could not be independently confirmed.",
+        address: "104-01 Foster Avenue, Brooklyn, NY",
+        openingTime: "Not available",
+        closingTime: "Not available",
+        daysOpen: "Not available",
+        contact: "Not available",
+        priceRange: "Not available",
+        additional: "The restaurant dataset includes this establishment under its listed name. Current business details, including its menu, operating hours, contact number, and availability of dine-in or takeaway service, could not be confirmed."
     },
 
 
@@ -93,69 +93,69 @@ const featuredInfo = {
     // =====================================
 
     "B66 Club": {
-        description: "A Brooklyn restaurant listed under Russian cuisine, offering a casual dining experience.",
-        address: "66 Greenpoint Avenue, Brooklyn, New York 11222",
-        openingTime: "11:00 AM",
-        closingTime: "10:00 PM",
-        daysOpen: "Monday - Sunday",
-        contact: "(718) 555-2101",
-        priceRange: "$$",
-        additional: "Sample information includes dine-in service and a relaxed setting for casual meals."
+        description: "A spacious dance club and event venue in Brooklyn featuring a dance floor, two bars, a VIP section, and pool tables.",
+        address: "6612 New Utrecht Avenue, Brooklyn, NY 11219",
+        openingTime: "9:00 PM",
+        closingTime: "4:00 AM (next day)",
+        daysOpen: "Friday - Saturday",
+        contact: "(917) 975-2254",
+        priceRange: "$$ - Moderate (drinks about $7–$15+)",
+        additional: "Offers a dance floor, bars, VIP area, pool tables, outdoor seating, and private event rentals. Accepts credit cards and provides wheelchair access. Guests must be 21 or older and present a valid government-issued ID."
     },
 
     "Bagel Shoppe": {
-        description: "A Queens establishment specializing in bagels, pretzels, and convenient breakfast options.",
-        address: "125 Queens Boulevard, Queens, New York 11375",
-        openingTime: "6:00 AM",
-        closingTime: "7:00 PM",
+        description: "A neighborhood bagel shop offering assorted bagels, flavored cream cheeses, breakfast sandwiches, deli sandwiches, and coffee.",
+        address: "215-03 73rd Avenue, Oakland Gardens, Queens, NY 11364",
+        openingTime: "5:00 AM",
+        closingTime: "4:00 PM",
         daysOpen: "Monday - Sunday",
-        contact: "(718) 555-2102",
-        priceRange: "$",
-        additional: "Sample information includes breakfast, takeaway orders, and quick snacks."
+        contact: "(718) 423-6692",
+        priceRange: "$ - Inexpensive (estimated $2–$15)",
+        additional: "Offers takeout and several vegetarian options. Android Pay is listed among its payment options."
     },
 
     "Belaire Cafe": {
-        description: "A Manhattan cafe listed under American cuisine, suitable for casual everyday dining.",
-        address: "245 Madison Avenue, New York, New York 10016",
+        description: "A casual cafeteria-style cafe on Manhattan's Upper East Side serving coffee, breakfast, and prepared meals.",
+        address: "525 East 71st Street, New York, NY 10021",
         openingTime: "7:00 AM",
-        closingTime: "9:00 PM",
-        daysOpen: "Monday - Sunday",
-        contact: "(212) 555-2103",
-        priceRange: "$$",
-        additional: "Sample information includes a relaxed setting for breakfast, lunch, and casual meetups."
+        closingTime: "6:00 PM",
+        daysOpen: "Monday - Friday; closed Saturday and Sunday",
+        contact: "(212) 606-1980",
+        priceRange: "$ - Inexpensive (estimated $2–$15)",
+        additional: "Provides a casual dining option near the Hospital for Special Surgery (HSS). Garage parking is available nearby."
     },
 
     "Brooklyn Diner": {
-        description: "A diner-style restaurant listed under American cuisine, offering a familiar and welcoming dining atmosphere.",
-        address: "212 West 57th Street, New York, New York 10019",
+        description: "A classic American diner serving all-day breakfast, burgers, comfort food, and desserts.",
+        address: "212 West 57th Street, New York, NY 10019",
         openingTime: "8:00 AM",
-        closingTime: "11:00 PM",
+        closingTime: "10:00 PM Sunday - Thursday; 11:00 PM Friday - Saturday",
         daysOpen: "Monday - Sunday",
-        contact: "(212) 555-2104",
-        priceRange: "$$",
-        additional: "Sample information includes breakfast, lunch, dinner, and casual dining."
+        contact: "(212) 977-1957",
+        priceRange: "$$$ - Moderately expensive (dishes about $14.50–$34+)",
+        additional: "Accepts reservations and major credit cards. Delivery, takeout, and wheelchair access are available."
     },
 
     "Cambridge Caterers": {
-        description: "A Manhattan establishment listed under American cuisine, with a name suggesting catering services.",
-        address: "350 West 42nd Street, New York, New York 10036",
-        openingTime: "8:00 AM",
+        description: "A catering business offering breakfast trays, boxed lunches, sandwiches, buffets, and party platters for meetings and special events.",
+        address: "21 West 38th Street, New York, NY 10018",
+        openingTime: "7:00 AM",
         closingTime: "6:00 PM",
-        daysOpen: "Monday - Saturday",
-        contact: "(212) 555-2105",
-        priceRange: "$$",
-        additional: "Sample information includes catering inquiries, group orders, and event food services."
+        daysOpen: "Monday - Friday; closed Saturday and Sunday",
+        contact: "(212) 819-9130",
+        priceRange: "$$ - Moderate ($6.50–$49.95+ per person, depending on package)",
+        additional: "Offers vegetarian menu options and catering services for office meetings and events. Its website reportedly redirects to Metro Catering, so current business details should be confirmed directly."
     },
 
     "Circle In The Square Theatre": {
-        description: "A Manhattan theatre venue that appears under American cuisine in your restaurant dataset.",
-        address: "235 West 50th Street, New York, New York 10019",
-        openingTime: "10:00 AM",
-        closingTime: "10:00 PM",
-        daysOpen: "Monday - Sunday",
-        contact: "(212) 555-2106",
-        priceRange: "$$",
-        additional: "Check performance schedules and visitor information. Food service details should be confirmed separately."
+        description: "A Broadway theatre presenting plays and musicals, with an associated school offering professional acting and musical theatre training.",
+        address: "235 West 50th Street, New York, NY 10019",
+        openingTime: "10:00 AM Monday - Saturday; 12:00 PM Sunday",
+        closingTime: "6:00 PM Monday and Sunday; 8:00 PM Tuesday - Saturday",
+        daysOpen: "Monday - Sunday for the box office; performance schedules vary",
+        contact: "(212) 664-1591 ext. 1 (theatre); (212) 307-0388 (school)",
+        priceRange: "Varies by production; recent listings about $86–$327+ per ticket",
+        additional: "Offers wheelchair-accessible seating, elevator access, and assistive listening devices. Tickets are available through Telecharge or the theatre's box office. Sunday and holiday hours may vary."
     }
 
 };
@@ -242,7 +242,7 @@ async function loadFeaturedRestaurants() {
 }
 
 
- // ===============================
+// ===============================
 // LOAD BOROUGH AND CUISINE OPTIONS
 // ===============================
 
@@ -339,7 +339,7 @@ async function loadRestaurants() {
     const borough =
         document.getElementById("boroughFilter")?.value;
 
-    const cuisine = 
+    const cuisine =
         document.getElementById("cuisine")?.value;
 
     const grade =
@@ -445,7 +445,7 @@ function displayFeaturedRestaurants(
 
             const image =
                 foodImages[
-                    index % foodImages.length
+                index % foodImages.length
                 ];
 
 
@@ -543,7 +543,7 @@ function displayRestaurants(
 
             const image =
                 foodImages[
-                    index % foodImages.length
+                index % foodImages.length
                 ];
 
 
@@ -643,10 +643,9 @@ function openRestaurantModal(restaurant, image) {
         `Grade ${grade}`;
 
     gradeElement.className =
-        `badge badge-grade ${
-            ["A", "B", "C"].includes(grade)
-                ? `grade-${grade}`
-                : "grade-other"
+        `badge badge-grade ${["A", "B", "C"].includes(grade)
+            ? `grade-${grade}`
+            : "grade-other"
         }`;
 
 
@@ -691,13 +690,13 @@ function openRestaurantModal(restaurant, image) {
     }
 
 
-    // MATCH RESTAURANT DETAILS
+    const restaurantName = (restaurant.name || "").trim();
 
-    const restaurantName =
-        (restaurant.name || "").trim();
+    const infoKey = restaurantName === "Lewis Drug Store"
+        ? "Locanda Vini E Olii"
+        : restaurantName;
 
-    const info =
-        featuredInfo[restaurantName];
+    const info = featuredInfo[infoKey];
 
 
     // DESCRIPTION
@@ -714,13 +713,13 @@ function openRestaurantModal(restaurant, image) {
 
     // OPENING HOURS
 
-    const openingTime = info?.openingTime;
-    const closingTime = info?.closingTime;
+    const hoursElement =
+        document.getElementById("restaurantModalHours");
 
-    document.getElementById("restaurantModalHours").textContent =
-        openingTime && closingTime
-            ? `${openingTime} - ${closingTime}`
-            : "Not available";
+    hoursElement.textContent =
+        info?.openingTime || "Not available";
+
+    hoursElement.style.whiteSpace = "pre-line";
 
 
     // DAYS OPEN
@@ -760,7 +759,7 @@ function openRestaurantModal(restaurant, image) {
 }
 
 
- // ===============================
+// ===============================
 // RESTAURANT MODAL CLOSE
 // ===============================
 
@@ -800,7 +799,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
- // ===============================
+// ===============================
 // BEST QUALITY
 // ===============================
 
