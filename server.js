@@ -531,7 +531,7 @@ async function connectDB() {
         console.log("Collection: restaurants");
 
         app.listen(PORT, () => {
-            console.log(`🚀 Server running at http://localhost:${PORT}`);
+            console.log(`Server running at http://localhost:${PORT}`);
         });
     } catch (error) {
         console.error("MongoDB Connection Error:", error.message);
